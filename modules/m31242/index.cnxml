@@ -1,0 +1,103 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Learning Objects for Java (Overview)</title>
+  <metadata>
+  <md:content-id>m31242</md:content-id><md:title>Learning Objects for Java (Overview)</md:title>
+  <md:abstract>This module gives an overview of the learning objects in this collection and instructions for installing and using them.</md:abstract>
+  <md:uuid>d0a81dcc-2ebd-428c-ae51-98f0baad0499</md:uuid>
+</metadata>
+<featured-links>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit below.
+       Changes to the links section in the source will not be saved. -->
+    <link-group type="supplemental">
+      <link url="http://stwww.weizmann.ac.il/g-cs/benari/lov/index.html" strength="3">LaTeX, HTML, PDF versions of the learning objects</link>
+    </link-group>
+    <link-group type="prerequisite">
+      <link url="http://www.cs.joensuu.fi/jeliot/" strength="3">Jeliot Program Animation System</link>
+    </link-group>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit above.
+       Changes to the links section in the source will not be saved. -->
+</featured-links>
+<content>
+    <para id="id2258257">
+      <emphasis effect="bold">Overview:</emphasis>
+    </para>
+    <para id="id2258267"><emphasis effect="italics">Learning objects (LOs)</emphasis> are small, self-contained, reusable
+resources for learning. The advantages of LOs include: <emphasis effect="italics">flexibility
+of use</emphasis> (students can choose to work with LOs at their convenience) and
+<emphasis effect="italics">adaptability</emphasis> (students can choose to work only with those LOs
+that address topics they find difficult).</para>
+    <para id="id2258934">This collection contains five modules, each with about ten LOs for the
+topic of the module: control structures, arrays, methods, constructors,
+inheritance.</para>
+    <para id="id2258940">The LOs in this collection are designed for use with the Jeliot system
+for animating introductory programs in Java.</para>
+    <para id="id2258945">A learning object consists of text and Java programs. Each LO is
+independent, so if you know the needed background material you can go
+directly to any LO. For each topic, a table is given that lists the LOs,
+the associated source files, and the “prerequisites” for each LO. The
+prerequisites are the number of the LO that introduces <emphasis effect="italics">concepts</emphasis>
+that are assumed; however, there is no need to actually work through the
+LOs in sequence.</para>
+    <para id="id2258967">The text for each LO starts with a description of the concept being presented
+and an overview of the example program. It is followed by a bulleted list for
+each program that describes what to observe as you <emphasis effect="italics">step</emphasis> through the
+program with Jeliot. The text for the LO ends with a programming exercise.</para>
+    <para id="id2258980">
+      <emphasis effect="bold">Installation:</emphasis>
+    </para>
+    <para id="id2258986">Before you begin, download and install Jeliot from the link given in the
+sidebar. Download the zip files with the source code for each of the
+LOs. There is a zip file associated with each module that contains the
+source files for the LOs for its topic; in addition, there is a
+<link resource="learning-objects.zip">zip file learning-objects.zip</link>
+with the source files for all the LOs in the collection.</para>
+    <para id="id2258996">
+      <emphasis effect="bold">Tips for using Jeliot:</emphasis>
+    </para>
+    <list id="id2259002" display="block" list-type="bulleted">
+      <item id="uid1">The LOs have been tested with Jeliot Version 3.7.1; please ensure that you
+are not using earlier versions.
+</item>
+      <item id="uid2">Copy the source file directories to a clean directory so that if you make
+changes you will not modify the original files.
+Run Jeliot and open the source file for the LO you want to work with.
+</item>
+      <item id="uid3">Learn how to use Jeliot before studying the LOs.
+In particular, learn how to use <code display="inline">Step</code>, <code display="inline">Pause</code>, <code display="inline">Play</code>,
+and <code display="inline">Rewind</code> to control the animation.
+</item>
+      <item id="uid4">Select <code display="inline">Animation / Run Until... (ctrl-T)</code> and enter a line number to begin
+the animation at that line. This is very useful in two situations:
+<list id="id2259085" display="block" list-type="bulleted"><item id="uid5">when you are animating a program several times and
+wish to skip over the initialization or other parts of the code;
+</item><item id="uid6">when you wish to examine the final state after the last line of the
+main method: enter the line number of the closing brace of the main method.
+</item></list></item>
+      <item id="uid7">Select <code display="inline">Options / Show History View</code> to enable storing of each step
+of the animation; these can be viewed by selecting the <code display="inline">History</code> tab
+on the right-hand side of the display. Enabling the history may slow Jeliot down,
+especially for large programs.
+</item>
+      <item id="uid8">The programs in the LOs use standard Java
+with two exceptions that simplify the animations:
+<list id="id2259154" display="block" list-type="bulleted"><item id="uid9">None of the programs use the parameter of the <code display="inline">main</code> method.
+Since Jeliot accepts Java programs without the formal parameter
+definition <code display="inline">String[] args</code>, the parameter has been commented-out in the programs.
+You can remove the comments to compile the programs with a Java compiler.
+If you wish to run Jeliot with the parameter, you can select <code display="inline">Options /
+Use Null Parameter to Call Main</code> to skip over the animation of the parameter.
+</item><item id="uid10">Two of the LOs on control structures use the input statement:
+<code display="inline">input = Input.nextInt()</code>.
+To compile these programs with standard Java,
+add the following declaration to the <code display="inline">main</code> method:
+<code id="id2259220" display="block">	java.util.Scanner Input = new java.util.Scanner(System.in);
+</code></item></list></item>
+    </list>
+    <para id="id2259235">
+      <emphasis effect="bold">Acknowledgements:</emphasis>
+    </para>
+    <para id="id2259241">I would like to thank Niko Myller and Andrés Moreno
+for modifying Jeliot to accomodate the LOs, and Ronit Ben-Bassat Levy for suggestions
+for improving the LOs.</para>
+  </content>
+</document>

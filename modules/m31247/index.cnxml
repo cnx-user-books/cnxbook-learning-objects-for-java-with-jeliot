@@ -1,0 +1,891 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Learning Objects for Methods in Java</title>
+  <metadata>
+  <md:content-id>m31247</md:content-id><md:title>Learning Objects for Methods in Java</md:title>
+  <md:abstract>These learning object concern methods in Java. A method enables a sequence of statements to be collected together and then invoked by using the method's name.</md:abstract>
+  <md:uuid>4cec2176-0d4f-4b39-ab4a-3ab3ecf6c3f6</md:uuid>
+</metadata>
+<featured-links>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit below.
+       Changes to the links section in the source will not be saved. -->
+    <link-group type="prerequisite">
+      <link url="http://www.cs.joensuu.fi/jeliot/" strength="3">Jeliot Program Animation System</link>
+    </link-group>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit above.
+       Changes to the links section in the source will not be saved. -->
+</featured-links>
+<content>
+    <section id="cid1">
+      <title>Learning Objects for Methods</title>
+      <para id="id2270964"><emphasis effect="bold">Concept</emphasis> <emphasis effect="italics">Methods</emphasis> are the simplest construct for abstraction
+in Java. A method starts with a declaration that defines its <emphasis effect="italics">signature</emphasis>:
+the name of the method, the number and types of the <emphasis effect="italics">formal parameters</emphasis>
+and the <emphasis effect="italics">return type</emphasis>.
+The body of the method consists of local variable declarations and of statements.
+A method is <emphasis effect="italics">called</emphasis> or <emphasis effect="italics">invoked</emphasis> by writing the name of the method
+followed by a list of values, called <emphasis effect="italics">actual parameters</emphasis>, one for
+each formal parameter. A method can return a value or it can be declared
+as <code display="inline">void</code> if no value is returned.</para>
+      <para id="eip-665">These source code of these learning objects can be found in <link resource="method.zip">method.zip</link>.
+</para><table id="id2271665" summary="">
+        <tgroup cols="4">
+          <tbody>
+            <row>
+              <entry>LO</entry>
+              <entry>Topic</entry>
+              <entry>Java Files (.java)</entry>
+              <entry>Prerequisites</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid1">"A void method"</link>
+              </entry>
+              <entry>A void method</entry>
+              <entry>Method01</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid10">"A method returning a value"</link>
+              </entry>
+              <entry>A method returning a value</entry>
+              <entry>Method02</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid20">"Calling one method from another"</link>
+              </entry>
+              <entry>Calling one method from another</entry>
+              <entry>Method03</entry>
+              <entry>1, 2</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid30">"Recursion"</link>
+              </entry>
+              <entry>Recursion</entry>
+              <entry>Method04</entry>
+              <entry>2</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid37">"Calling methods on an object"</link>
+              </entry>
+              <entry>Calling methods on an object</entry>
+              <entry>Method05</entry>
+              <entry>2, *</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid45">"Calling a method on the same object"</link>
+              </entry>
+              <entry>Calling a method on the same object</entry>
+              <entry>Method06</entry>
+              <entry>5, *</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid55">"Objects as parameters"</link>
+              </entry>
+              <entry>Objects as parameters</entry>
+              <entry>Method07</entry>
+              <entry>5, *</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid62">"Returning objects"</link>
+              </entry>
+              <entry>Returning objects</entry>
+              <entry>Method08</entry>
+              <entry>7, *</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid69">"Returning locally instantiated objects"</link>
+              </entry>
+              <entry>Returning locally instantiated objects</entry>
+              <entry>Method09</entry>
+              <entry>8, *</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <!--empty paragraphs get left behind.-->
+      <para id="id2272030">* This LO assumes knowledge of the declaration of
+classes and the instantiation of objects.</para>
+      <section id="uid1">
+        <title>A void method</title>
+        <para id="id2272043"><emphasis effect="bold">Concept</emphasis> When a method that is declared <code display="inline">void</code> is called,
+it allocates memory for its parameters and local variables, executes
+its statements and then returns. The call is a statement constructed
+from the name of the method followed by a list of actual parameters.</para>
+        <para id="id2272060">
+          <emphasis effect="bold">Program: Method01.java</emphasis>
+        </para>
+        <code id="id2272067" display="block">// Learning Object Method01
+//    void methods
+public class Method01 {
+    static void printMax(int a, int b) {
+        int max;
+        if (a &gt; b)
+            max = a;
+        else
+            max = b;
+        System.out.println(max);
+    }
+ 
+    public static void main(/*String[] args*/) {
+        int x = 10, y = 20;
+        printMax(x, y);
+        Method01.printMax(10, y);
+    }
+}
+</code>
+        <para id="id2272232">The program computes the maximum of two integer values.</para>
+        <list id="id2272236" display="block" list-type="bulleted">
+          <item id="uid2">The variables <code display="inline">x</code> and <code display="inline">y</code> are allocated and initialized.
+</item>
+          <item id="uid3">The method is called with the values of the actual parameters <code display="inline">x</code> and <code display="inline">y</code>.
+</item>
+          <item id="uid4">Memory is allocated for the formal parameters of the method and the local variables.
+This is called an <emphasis effect="italics">activation record</emphasis> and is displayed by Jeliot in the upper left
+hand part of the screen labeled <code display="inline">Method Area</code>. The new activation record hides
+the previous ones which are no longer accessible.
+</item>
+          <item id="uid5">The actual parameters are used to initialize the formal parameters in the activation
+record.
+</item>
+          <item id="uid6">The local variable <code display="inline">max</code> is allocated within the activation record.
+</item>
+          <item id="uid7">The statements of the method are executed.
+</item>
+          <item id="uid8">After the last statement has been executed, the method <emphasis effect="italics">returns</emphasis>
+and the activation record is deallocated.
+</item>
+          <item id="uid9">Execution continues with the statement after the method call.
+Here, the method is called again, this time with an integer literal
+as an actual parameter instead of a variable.
+</item>
+        </list>
+        <para id="id2272392"><emphasis effect="bold">Note:</emphasis> In a call to a static method, the name of the
+class in which it is defined can be given as in the second call.
+Since the method is defined in the <emphasis effect="italics">same</emphasis> class as the call,
+the class name need not be given, as shown in the first call.</para>
+        <para id="id2272408"><emphasis effect="bold">Exercise</emphasis> Trace the execution of a call of the following method and
+explain why it doesn't swap the values of the actual parameters.</para>
+        <code id="id2272418" display="block">void swap(int a, int b) {
+ int temp = a;
+ a = b;
+ b = temp;
+}
+</code>
+        <para id="id2272462">Can you write a method to swap two integer values?</para>
+      </section>
+      <section id="uid10">
+        <title>A method returning a value</title>
+        <para id="id2272479"><emphasis effect="bold">Concept</emphasis> When a method that is declared with a return type is called,
+it allocates memory for its parameters and local variables, executes
+its statements and then returns a value of the type.
+The call is a statement constructed
+from the name of the method followed by a list of actual parameters;
+the call is an expression and can appear wherever an expression is allowed.</para>
+        <para id="id2272492">
+          <emphasis effect="bold">Program: Method02.java</emphasis>
+        </para>
+        <code id="id2272499" display="block">// Learning Object Method02
+//    methods returning a value
+public class Method02 {
+    static int maximum(int a, int b) {
+        if (a &gt; b)
+            return a;
+        else
+            return b;
+    }
+ 
+    public static void main(/*String[] args*/) {
+        int x = 10, y = 20;
+        int max;
+        max = maximum(x, y);
+        System.out.println(max);
+    }
+}
+</code>
+        <list id="id2272654" display="block" list-type="bulleted">
+          <item id="uid11">The variables <code display="inline">x</code> and <code display="inline">y</code> are allocated and initialized;
+the variable <code display="inline">max</code> is allocated but not initialized.
+</item>
+          <item id="uid12">An assignment statement is executed: the expression on the right hand side is
+a method call including the values of the actual parameters <code display="inline">x</code> and <code display="inline">y</code>.
+</item>
+          <item id="uid13">Memory is allocated for the formal parameters of the method and the local variables.
+This is called an <emphasis effect="italics">activation record</emphasis> and is displayed by Jeliot in the upper left
+hand part of the screen labeled <code display="inline">Method Area</code>. The new activation record hides
+the previous ones which are no longer accessible.
+</item>
+          <item id="uid14">The actual parameters are used to initialize the formal parameters in the activation
+record.
+</item>
+          <item id="uid15">The statements of the method are executed.
+</item>
+          <item id="uid16">When the statement <code display="inline">return b</code> is executed, the value of <code display="inline">b</code> is used
+for the value to be returned.
+</item>
+          <item id="uid17">The method <emphasis effect="italics">returns</emphasis> and the activation record is deallocated.
+</item>
+          <item id="uid18">The value returned becomes the value of the expression assigned to the
+variable <code display="inline">max</code>.
+</item>
+          <item id="uid19">The value of <code display="inline">max</code> is printed.
+</item>
+        </list>
+        <para id="id2272840"><emphasis effect="bold">Exercise</emphasis> Write the body of the main method as one statement.</para>
+      </section>
+      <section id="uid20">
+        <title>Calling one method from another</title>
+        <para id="id2272859"><emphasis effect="bold">Concept</emphasis> One method can call another, that is, when executing
+one method, any statement or expression call be a method call. A sequence
+of method calls results in a <emphasis effect="italics">stack</emphasis> of activation records,
+where each method (except the last one that was called)
+is waiting for the method it called to return.
+There is no limit on the <emphasis effect="italics">depth</emphasis> of method calls,
+except of course the amount of memory allocated to the program.</para>
+        <para id="id2272884"><emphasis effect="bold">Note:</emphasis> The <code display="inline">main</code> method is a method like any other.
+The operating system can be considered as a program which calls the main method.
+This call has a single parameter: an array of strings containing the contents
+of the command line.</para>
+        <para id="id2272900">
+          <emphasis effect="bold">Program: Method03.java</emphasis>
+        </para>
+        <code id="id2272907" display="block">// Learning Object Method03
+//    calling a method from a method
+public class Method03 {
+    static int maximum(int a, int b) {
+        if (a &gt; b)
+            return a;
+        else
+            return b;
+    }
+ 
+    static void printMax(int a, int b) {
+        int max;
+        max = Method03.maximum(a, b);
+        System.out.println(max);
+    }
+ 
+    public static void main(/*String[] args*/) {
+        printMax(10, 20);
+    }
+}
+</code>
+        <list id="id2273095" display="block" list-type="bulleted">
+          <item id="uid21">The <code display="inline">main</code> method calls the method <code display="inline">printMax</code>;
+the actual parameters are two integer literals.
+</item>
+          <item id="uid22">The activation record for <code display="inline">printMax</code> is allocated,
+and the actual parameters are used to initialize the formal parameters
+<code display="inline">a</code> and <code display="inline">b</code>.
+</item>
+          <item id="uid23">The variable <code display="inline">max</code> is allocated but not initialized.
+</item>
+          <item id="uid24">The method <code display="inline">maximum</code> is called; the actual parameters are the
+values of <code display="inline">a</code> and <code display="inline">b</code>,
+which are the formal variables of method <code display="inline">printMax</code>.
+</item>
+          <item id="uid25">An activation record is allocated for <code display="inline">maximum</code>. (There are now
+three activation in the stack.) The new activation record includes
+memory for the formal parameters <code display="inline">a</code> and <code display="inline">b</code>; note that these are
+new parameters not at all related to the formal parameters of the same names
+in the previous method <code display="inline">printMax</code> because those parameters are hidden.
+</item>
+          <item id="uid26">The method <code display="inline">maximum</code> executes its body and returns a value.
+Just before it returns, select the tab <code display="inline">Call Tree</code> above the graphic display;
+the sequence of calls from <code display="inline">main</code>
+to <code display="inline">printMax</code> and then <code display="inline">maximum</code> is displayed.
+Select <code display="inline">Theater</code> to return to the animated display.
+</item>
+          <item id="uid27">When the method returns, its activation record is deallocated, uncovering the
+activation record of <code display="inline">printMax</code>.
+</item>
+          <item id="uid28">The value returned is assigned to the variable <code display="inline">max</code> and printed.
+</item>
+          <item id="uid29">When <code display="inline">printMax</code> completes its execution, its activation record
+is deallocated.
+</item>
+        </list>
+        <para id="id2273591"><emphasis effect="bold">Note:</emphasis> In a call to a static method, the name of the
+class in which it is defined can be given as in the call to <code display="inline">maximum</code>.
+Since the method is defined in the same class as the call,
+the class name need not be given, as shown in the call to <code display="inline">printMax</code>.</para>
+        <para id="id2273614"><emphasis effect="bold">Exercise</emphasis> Write a program to compute the maximum of six values
+using as few statements as possible.</para>
+      </section>
+      <section id="uid30">
+        <title>Recursion</title>
+        <para id="id2273633"><emphasis effect="bold">Concept</emphasis><emphasis effect="italics">Recursion</emphasis> occurs when method calls itself.
+There is nothing at all mysterious about recursion!
+Each call simply creates a new activation record on the stack.
+However, to ensure that the recursive calls terminate,
+eventually, some call of the method should return without
+invoking itself once again.</para>
+        <para id="id2273651">
+          <emphasis effect="bold">Program: Method04.java</emphasis>
+        </para>
+        <code id="id2273658" display="block">// Learning Object Method04
+//    recursion
+public class Method04 {
+    static int factorial (int n) {
+        if (n &lt;= 1)
+            return 1;
+        else
+            return n * factorial(n-1);
+    }
+ 
+    public static void main(/*String[] args*/) {
+        System.out.println(factorial(5));
+    }
+}
+</code>
+        <para id="id2273793">The standard example of a recursive method is one
+that computes the factorial function:</para>
+        <equation id="id2273798">
+          <m:math overflow="scroll" mode="display">
+            <m:mrow>
+              <m:mi>n</m:mi>
+              <m:mo>!</m:mo>
+              <m:mo>=</m:mo>
+              <m:mi>n</m:mi>
+              <m:mo>·</m:mo>
+              <m:mrow/>
+              <m:mo>(</m:mo>
+              <m:mi>n</m:mi>
+              <m:mo>-</m:mo>
+              <m:mn>1</m:mn>
+              <m:mo>)</m:mo>
+              <m:mo>·</m:mo>
+              <m:mrow/>
+              <m:mo>⋯</m:mo>
+              <m:mrow/>
+              <m:mo>·</m:mo>
+              <m:mrow/>
+              <m:mn>2</m:mn>
+              <m:mo>·</m:mo>
+              <m:mrow/>
+              <m:mn>1</m:mn>
+              <m:mo>=</m:mo>
+              <m:mi>n</m:mi>
+              <m:mo>·</m:mo>
+              <m:mrow/>
+              <m:mo>(</m:mo>
+              <m:mi>n</m:mi>
+              <m:mo>-</m:mo>
+              <m:mn>1</m:mn>
+              <m:mo>)</m:mo>
+              <m:mo>!</m:mo>
+            </m:mrow>
+          </m:math>
+        </equation>
+        <para id="id2273870">The recursion is terminated by defining <m:math overflow="scroll"><m:mrow><m:mi>n</m:mi><m:mo>!</m:mo><m:mo>=</m:mo><m:mn>1</m:mn></m:mrow></m:math> for <m:math overflow="scroll"><m:mrow><m:mi>n</m:mi><m:mo>≤</m:mo><m:mn>1</m:mn></m:mrow></m:math>.</para>
+        <list id="id2273908" display="block" list-type="bulleted">
+          <item id="uid31">The <code display="inline">main</code> method calls the method <code display="inline">factorial</code>
+with the actual parameter 5. This creates an activation record with
+the formal parameter <code display="inline">n</code> initialized to 5.
+</item>
+          <item id="uid32">To compute the expression in the second return statement,
+the method <code display="inline">factorial</code> is called again, this time with the actual
+parameter equal to <m:math overflow="scroll"><m:mrow><m:mn>5</m:mn><m:mo>-</m:mo><m:mn>1</m:mn><m:mo>=</m:mo><m:mn>4</m:mn></m:mrow></m:math>.
+</item>
+          <item id="uid33">The sequence of recursive calls continues five times,
+each one allocating a new activation record with a new variable <code display="inline">n</code>.
+</item>
+          <item id="uid34">Finally, <code display="inline">factorial</code> is called with actual parameter 1.
+This call creates a new activation record as usual, but does not
+cause <code display="inline">factorial</code> to be invoked again. Instead,
+the value 1 is returned and the activation record is deallocated.
+Just before the method returns, select the tab <code display="inline">Call Tree</code> above the graphic display;
+the sequence of calls from <code display="inline">main</code> to the sequence of recursive calls is displayed.
+Select <code display="inline">Theater</code> to return to the animated display.
+</item>
+          <item id="uid35">The recursive sequence <emphasis effect="italics">unfolds</emphasis>: each returned value
+is used to compute a new value to be returned by that call of <code display="inline">factorial</code>.
+</item>
+          <item id="uid36">Finally, the value 120 is returned to the <code display="inline">main</code> method and printed.
+</item>
+        </list>
+        <para id="id2274091"><emphasis effect="bold">Exercise</emphasis> Write a recursive method to compute the n'th Fibonacci number:</para>
+        <equation id="id2274100">
+          <m:math overflow="scroll" mode="display">
+            <m:mrow>
+              <m:mi>f</m:mi>
+              <m:mi>i</m:mi>
+              <m:mi>b</m:mi>
+              <m:mo>(</m:mo>
+              <m:mn>0</m:mn>
+              <m:mo>)</m:mo>
+              <m:mo>=</m:mo>
+              <m:mn>0</m:mn>
+              <m:mo>,</m:mo>
+              <m:mi>f</m:mi>
+              <m:mi>i</m:mi>
+              <m:mi>b</m:mi>
+              <m:mo>(</m:mo>
+              <m:mn>1</m:mn>
+              <m:mo>)</m:mo>
+              <m:mo>=</m:mo>
+              <m:mn>1</m:mn>
+              <m:mo>,</m:mo>
+              <m:mi>f</m:mi>
+              <m:mi>i</m:mi>
+              <m:mi>b</m:mi>
+              <m:mo>(</m:mo>
+              <m:mi>n</m:mi>
+              <m:mo>)</m:mo>
+              <m:mo>=</m:mo>
+              <m:mi>f</m:mi>
+              <m:mi>i</m:mi>
+              <m:mi>b</m:mi>
+              <m:mo>(</m:mo>
+              <m:mi>n</m:mi>
+              <m:mo>-</m:mo>
+              <m:mn>1</m:mn>
+              <m:mo>)</m:mo>
+              <m:mo>+</m:mo>
+              <m:mi>f</m:mi>
+              <m:mi>i</m:mi>
+              <m:mi>b</m:mi>
+              <m:mo>(</m:mo>
+              <m:mi>n</m:mi>
+              <m:mo>-</m:mo>
+              <m:mn>2</m:mn>
+              <m:mo>)</m:mo>
+              <m:mspace width="0.277778em"/>
+              <m:mspace width="0.277778em"/>
+              <m:mi mathvariant="italic">for</m:mi>
+              <m:mspace width="0.277778em"/>
+              <m:mspace width="0.277778em"/>
+              <m:mi>n</m:mi>
+              <m:mo>&gt;</m:mo>
+              <m:mn>1</m:mn>
+              <m:mo>.</m:mo>
+            </m:mrow>
+          </m:math>
+        </equation>
+        <para id="id2274227"><emphasis effect="bold">Exercise</emphasis> Write a more efficient nonrecursive method for the same function.</para>
+      </section>
+      <section id="uid37">
+        <title>Calling methods on an object</title>
+        <para id="id2274246"><emphasis effect="bold">Concept</emphasis> Nonstatic methods defined in a class must be invoked
+<emphasis effect="italics">on</emphasis> an object of the class. A reference to the object becomes
+an <emphasis effect="italics">implicit</emphasis> actual parameter that initializes a formal variable called
+<code display="inline">this</code> in the method. The variable <code display="inline">this</code> need not be
+explicitly mentioned when accessing fields of the object unless there is an ambiguity.</para>
+        <para id="id2274281">
+          <emphasis effect="bold">Program: Method05.java</emphasis>
+        </para>
+        <code id="id2274288" display="block">// Learning Object Method05
+//    calling methods on an object
+class Song {
+    int seconds;
+ 
+    Song(int s) {
+        seconds = s;
+    }
+ 
+    double computePrice(double pricePerSecond) {
+       return seconds * pricePerSecond;
+    }
+}
+ 
+public class Method05 {
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song(164);
+        Song song2 = new Song(103);
+        double price1 = song1.computePrice(0.01);
+        double price2 = song2.computePrice(0.02);
+        System.out.println(price1);
+        System.out.println(price2);
+    }
+}
+</code>
+        <para id="id2274510">This program computes the cost of a song as the product of its length
+in seconds and the price per second. A class <code display="inline">Song</code> is defined
+to encapsulate the field <code display="inline">seconds</code> and the method <code display="inline">computePrice</code>.</para>
+        <list id="id2274532" display="block" list-type="bulleted">
+          <item id="uid38">Two objects of class Song are instantiated and references to them
+are assigned to the variables <code display="inline">song1</code> and <code display="inline">song2</code>.
+</item>
+          <item id="uid39">The method <code display="inline">computePrice</code> is called <emphasis effect="italics">on</emphasis> the object referenced by <code display="inline">song1</code>. In Jeliot this is visualized by an arrow to the object
+placed in the <code display="inline">Expression Evaluation Area</code> followed by a period and
+the method name and parameters.
+</item>
+          <item id="uid40">An activation record is allocated containing two formal parameters:
+<code display="inline">this</code> is initialized by the implicit reference and <code display="inline">pricePerSecond</code>
+is initialized from the actual parameter.
+</item>
+          <item id="uid41">The reference in the parameter <code display="inline">this</code> is used to obtain
+the value of the field <code display="inline">seconds</code>. An expression is evaluated and
+its value returned.
+</item>
+          <item id="uid42">The activation record is deallocated and the value returned is stored in the variable <code display="inline">price1</code>.
+</item>
+          <item id="uid43">A second call to the method is executed in exactly the same way,
+except that it is called <emphasis effect="italics">on</emphasis> the object referenced by <code display="inline">song2</code>.
+</item>
+          <item id="uid44">The values of <code display="inline">price1</code> and <code display="inline">price2</code> are printed.
+</item>
+        </list>
+        <para id="id2274716"><emphasis effect="bold">Exercise</emphasis> Modify the method so that the formal parameter is <emphasis effect="italics">also</emphasis>
+named <code display="inline">seconds</code>. Yes, it can be done!
+(Hint: read the <emphasis effect="bold">Concept</emphasis> paragraph above.)</para>
+      </section>
+      <section id="uid45">
+        <title>Calling a method on the same object</title>
+        <para id="id2274754"><emphasis effect="bold">Concept</emphasis> A nonstatic method defined in a class that is invoked
+<emphasis effect="italics">on</emphasis> an object of the class can invoke another such method on the same object.
+The object for the second call is the same as the one on the first call,
+namely, the only referenced by <code display="inline">this</code>.
+There is no need to explicitly write <code display="inline">this</code> and the object may be accessed implicitly.</para>
+        <para id="id2274784">
+          <emphasis effect="bold">Program: Method06A.java</emphasis>
+        </para>
+        <code id="id2274791" display="block">// Learning Object Method06A
+//    calling a method on the same object
+class Song {
+    int seconds;
+ 
+    Song(int s) {
+        seconds = s;
+    }
+ 
+    boolean discount(int s) {
+        return s &gt; 300;
+    }
+ 
+    double computePrice(double pricePerSecond) {
+        double price = seconds * pricePerSecond;
+        if (discount(seconds))
+            price = price * 0.9;
+        return price;
+    }
+}
+ 
+public class Method06A {
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song(164);
+        Song song2 = new Song(403);
+        double price1 = song1.computePrice(0.01);
+        double price2 = song2.computePrice(0.01);
+        System.out.println(price1);
+        System.out.println(price2);
+    }
+}
+</code>
+        <para id="id2275081">This program computes the cost of a song as the product of its length
+in seconds and the price per second. A discount is applied
+to “long” songs. A class <code display="inline">Song</code> is defined
+to encapsulate the field <code display="inline">seconds</code> and the methods <code display="inline">computePrice</code>
+and <code display="inline">discount</code>.</para>
+        <list id="id2275113" display="block" list-type="bulleted">
+          <item id="uid46">Two objects of class Song are instantiated and references to them
+are assigned to the variables <code display="inline">song1</code> and <code display="inline">song2</code>.
+</item>
+          <item id="uid47">The method <code display="inline">computePrice</code> is called <emphasis effect="italics">on</emphasis> the object referenced by <code display="inline">song1</code>. In Jeliot this is visualized by an arrow to the object
+placed in the <code display="inline">Expression Evaluation Area</code> followed by a period and
+the method name and parameters.
+</item>
+          <item id="uid48">An activation record is allocated containing two formal parameters:
+<code display="inline">this</code> is initialized by the implicit reference and <code display="inline">pricePerSecond</code>
+is initialized from the actual parameter.
+</item>
+          <item id="uid49">The local variable <code display="inline">price</code> is declared and initialized by the
+expression calculated from the formal parameter <code display="inline">pricePerSecond</code> and
+the field of the object <code display="inline">seconds</code> that is implicitly accessed through <code display="inline">this</code>.
+</item>
+          <item id="uid50">The method <code display="inline">discount</code>,
+declared in the same class, is invoked and returns a boolean value.
+A new activation is allocated for this method and deallocated when it terminates.
+The implicit actual parameter is <code display="inline">this</code> and it is used to initialize the
+implicit formal parameter <code display="inline">this</code> of the method <code display="inline">discount</code>.
+</item>
+          <item id="uid51">The activation record for <code display="inline">computePrice</code> is deallocated
+and the value returned is stored in the variable <code display="inline">price1</code>.
+</item>
+          <item id="uid52">A second call to the method is executed exactly the same way,
+except that it is called <emphasis effect="italics">on</emphasis> the object referenced by <code display="inline">song2</code>.
+</item>
+          <item id="uid53">The values of <code display="inline">price1</code> and <code display="inline">price2</code> are printed.
+</item>
+        </list>
+        <para id="id2275355"><emphasis effect="bold">Exercise</emphasis> Modify the program so that discount does not use the explicit
+parameter <code display="inline">s</code>.</para>
+        <para id="id2275370">
+          <emphasis effect="bold">Program: Method06B.java</emphasis>
+        </para>
+        <code id="id2275377" display="block">// Learning Object Method06B
+//    calling a method on the same object
+class Song {
+    int seconds;
+ 
+    Song(int s) {
+        seconds = s;
+    }
+ 
+    static int level(int n) {
+        return n * 100;
+    }
+ 
+    boolean discount(int s) {
+        return s &gt; level(3);
+    }
+ 
+    double computePrice(double pricePerSecond) {
+        double price = seconds * pricePerSecond;
+        if (discount(seconds))
+            price = price * 0.9;
+        return price;
+    }
+}
+ 
+public class Method06B {
+    public static void main(/* String[] args */) {
+        Song song1 = new Song(164);
+        Song song2 = new Song(403);
+        double price1 = song1.computePrice(0.01);
+        double price2 = song2.computePrice(0.01);
+        System.out.println(price1);
+        System.out.println(price2);
+    }
+}
+</code>
+        <para id="id2275703">Given a call to a method <code display="inline">m2</code> within a method <code display="inline">m1</code>:</para>
+        <code id="id2275718" display="block">void m1() {
+  m2();
+}
+</code>
+        <para id="id2275746">it is impossible to tell from the call if m2 is being implicitly called <emphasis effect="italics">on</emphasis>
+the same object or if it is a static method defined in the class.</para>
+        <list id="id2275759" display="block" list-type="bulleted">
+          <item id="uid54">This program is a modification of the previous one: instead of comparing
+<code display="inline">s</code> with 300 in the method <code display="inline">discount</code>, it is compared with
+the value returned by the method <code display="inline">level</code>. It is impossible to tell
+from the calls alone to <code display="inline">discount</code> and <code display="inline">level</code> that the first is
+a call on an object while the second is a call to a static method.
+</item>
+        </list>
+        <para id="id2275808"><emphasis effect="bold">Exercise</emphasis> Modify the calls to <code display="inline">discount</code> and <code display="inline">level</code>
+so that it is immediately apparent which is definitely a call on an object and which
+is definitely a call to a static method.</para>
+      </section>
+      <section id="uid55">
+        <title>Objects as parameters</title>
+        <para id="id2275840"><emphasis effect="bold">Concept</emphasis> A reference to an object can be an actual parameter whose
+corresponding formal parameter is declared to be of the same class.
+As with all parameters, the <emphasis effect="italics">value</emphasis> of actual parameter is used
+to initialize the formal parameter, but since it is a reference that is
+passed, the method that is called can access fields and methods of the
+object. This is called <emphasis effect="italics">reference semantics</emphasis>.</para>
+        <para id="id2275865">
+          <emphasis effect="bold">Program: Method07.java</emphasis>
+        </para>
+        <code id="id2275872" display="block">// Learning Object Method07
+//    objects as parameters
+class Song {
+    int seconds;
+ 
+    Song(int s) {
+        seconds = s;
+    }
+ 
+    double computePrice(double pricePerSecond) {
+       return seconds * pricePerSecond;
+    }
+}
+ 
+public class Method07 {
+ 
+    static double getPrice(Song s, double ppS) {
+        return s.computePrice(ppS);
+    }
+ 
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song(164);
+        Song song2 = new Song(103);
+        double price1 = getPrice(song1, 0.01);
+        double price2 = getPrice(song2, 0.02);
+        System.out.println(price1);
+        System.out.println(price2);
+    }
+}
+</code>
+        <para id="id2276139">This program computes the cost of a song as the product of its length
+in seconds and the price per second. A class <code display="inline">Song</code> is defined
+to encapsulate the field <code display="inline">seconds</code> and the method <code display="inline">computePrice</code>.
+The method <code display="inline">getPrice</code> in the <code display="inline">main</code> method receives an object of class
+<code display="inline">Song</code> as a parameter and calls <code display="inline">computePrice</code>.</para>
+        <list id="id2276186" display="block" list-type="bulleted">
+          <item id="uid56">Two objects of class Song are instantiated and references to them
+are assigned to the variables <code display="inline">song1</code> and <code display="inline">song2</code>.
+</item>
+          <item id="uid57">The method <code display="inline">getPrice</code> is called with two parameters:
+the first is a reference <code display="inline">song1</code> to an object of class <code display="inline">Song</code>, while the second
+is a value of type double. The actual parameters are used to initialize the formal
+parameters; check that <code display="inline">song1</code> and <code display="inline">s</code> reference the same object.
+</item>
+          <item id="uid58">Since the formal parameter <code display="inline">s</code> receives a reference to an object
+of class <code display="inline">Song</code> (in this case <code display="inline">song1</code>), it can be used to call
+the method <code display="inline">computePrice</code> declared in the class.
+</item>
+          <item id="uid59">The method returns a value that is assigned to <code display="inline">price1</code>.
+</item>
+          <item id="uid60">A second call to the method is executed exactly the same way,
+except that the actual parameter is the reference contained in <code display="inline">song2</code>.
+</item>
+          <item id="uid61">The values of <code display="inline">price1</code> and <code display="inline">price2</code> are printed.
+</item>
+        </list>
+        <para id="id2276358"><emphasis effect="bold">Exercise</emphasis> Modify the program so that discount does not use the explicit
+parameter <code display="inline">s</code>.</para>
+      </section>
+      <section id="uid62">
+        <title>Returning objects</title>
+        <para id="id2276382"><emphasis effect="bold">Concept</emphasis> A return value can be a reference to an object.</para>
+        <para id="id2276391">
+          <emphasis effect="bold">Program: Method08.java</emphasis>
+        </para>
+        <code id="id2276398" display="block">// Learning Object Method08
+//    returning objects
+class Song {
+    int seconds;
+ 
+    Song(int s) {
+        seconds = s;
+    }
+ 
+    double computePrice(double pricePerSecond) {
+       return seconds * pricePerSecond;
+    }
+}
+ 
+public class Method08 {
+ 
+    static Song longer(Song s1, Song s2) {
+        if (s1.seconds &gt; s2.seconds)
+            return s1;
+        else
+            return s2;
+    }
+ 
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song(164);
+        Song song2 = new Song(103);
+        Song longerSong  = longer(song1, song2);
+        double price2 = longerSong.computePrice(0.01);
+        System.out.println(price2);
+    }
+}
+</code>
+        <para id="id2276687">This program computes the cost of a song as the product of its length
+in seconds and the price per second. A class <code display="inline">Song</code> is defined
+to encapsulate the field <code display="inline">seconds</code> and the method <code display="inline">computePrice</code>.
+The method <code display="inline">longer</code> in the <code display="inline">main</code> method receives references
+to two objects of class <code display="inline">Song</code> as parameters and returns a reference
+to the one with the larger value of the field <code display="inline">seconds</code>.</para>
+        <list id="id2276735" display="block" list-type="bulleted">
+          <item id="uid63">Two objects of class Song are instantiated and references to them
+are assigned to the variables <code display="inline">song1</code> and <code display="inline">song2</code>.
+</item>
+          <item id="uid64">The method <code display="inline">longer</code> is called with two parameters
+that are references to objects of class <code display="inline">Song</code>.
+The actual parameters are used to initialize the formal
+parameters; check that <code display="inline">song1</code> and <code display="inline">s1</code> reference the same object,
+as do <code display="inline">song2</code> and <code display="inline">s2</code>.
+</item>
+          <item id="uid65">Since the formal parameters <code display="inline">s1</code> and <code display="inline">s2</code> receive references to objects
+of class <code display="inline">Song</code>, they can be used to access the fields <code display="inline">seconds</code> of each object.
+</item>
+          <item id="uid66">The method returns the reference to the object whose field <code display="inline">seconds</code>
+has the larger value. The reference is assigned to the variable <code display="inline">longerSong</code>;
+check that this reference is to the same object as the reference in <code display="inline">song1</code>.
+</item>
+          <item id="uid67">The reference in <code display="inline">longerSong</code> is used to call the method <code display="inline">computePrice</code>
+and the value returned is assigned to the variable <code display="inline">price2</code>.
+</item>
+          <item id="uid68">The value <code display="inline">price2</code> is printed.
+</item>
+        </list>
+        <para id="id2276929"><emphasis effect="bold">Exercise</emphasis> Modify the program so that discount does not use the explicit
+parameter <code display="inline">s</code>.</para>
+        <para id="id2276943"><emphasis effect="bold">Exercise</emphasis> Replace the last declaration and statements of the program by one
+declaration.</para>
+        <para id="id2276953"><emphasis effect="bold">Exercise</emphasis> Write a method to swap two integer values.</para>
+      </section>
+      <section id="uid69">
+        <title>Returning locally instantiated objects</title>
+        <para id="id2276972"><emphasis effect="bold">Concept</emphasis> When a method terminates, its activation record is deallocated.
+However, if an object has been instantiated <emphasis effect="italics">within the method</emphasis>,
+a reference to the object can be returned to the calling method.</para>
+        <para id="id2276988">
+          <emphasis effect="bold">Program: Method09.java</emphasis>
+        </para>
+        <code id="id2276996" display="block">// Learning Object Method09
+//    returning locally instantiated objects
+class Song {
+    int seconds;
+ 
+    Song(int s) {
+        seconds = s;
+    }
+ 
+    double computePrice(double pricePerSecond) {
+       return seconds * pricePerSecond;
+    }
+}
+ 
+public class Method09 {
+ 
+    static Song doubleSong(Song s1) {
+        Song d = new Song(s1.seconds*2);
+        return d;
+    }
+ 
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song(164);
+        Song longSong  = doubleSong(song1);
+    }
+}
+</code>
+        <para id="id2277235">This program computes the cost of a song as the product of its length
+in seconds and the price per second. A class <code display="inline">Song</code> is defined
+to encapsulate the field <code display="inline">seconds</code> and the method <code display="inline">computePrice</code>.
+The method <code display="inline">double</code> in the <code display="inline">main</code> method receives a reference
+to an object of class <code display="inline">Song</code> as a parameter and returns a reference
+to an new object of class <code display="inline">Song</code> whose field <code display="inline">seconds</code> is twice as large.</para>
+        <list id="id2277289" display="block" list-type="bulleted">
+          <item id="uid70">Two objects of class Song are instantiated and references to them
+are assigned to the variables <code display="inline">song1</code> and <code display="inline">song2</code>.
+</item>
+          <item id="uid71">The method <code display="inline">doubleSong</code> is called with an actual parameter
+that is a reference <code display="inline">song1</code> to an object of class <code display="inline">Song</code>.
+The actual parameter is used to initialize the formal
+parameter; check that <code display="inline">song1</code> and <code display="inline">s1</code> reference the same object.
+</item>
+          <item id="uid72"><emphasis effect="italics">Within the method</emphasis>, the <code display="inline">seconds</code> field of the object referenced
+by <code display="inline">s1</code> is used to instantiate a new object whose reference is assigned
+to the variable <code display="inline">d</code> of class <code display="inline">Song</code>.
+</item>
+          <item id="uid73">The method returns the reference to the object contained in <code display="inline">d</code>;
+although <code display="inline">d</code> disappears when the activation record is deallocated,
+the object still exists as does the reference that is returned.
+</item>
+          <item id="uid74">The returned reference is assigned to the variable <code display="inline">longSong</code>;
+check that <code display="inline">song1</code> and <code display="inline">longSong</code> reference <emphasis effect="italics">different</emphasis> objects!
+</item>
+        </list>
+        <para id="id2277463"><emphasis effect="bold">Exercise</emphasis> Replace the last line of the program by:
+<code display="inline">song1 = doubleSong(song1);</code>
+and explain precisely what happens.
+</para>
+      </section>
+    </section>
+  </content>
+</document>

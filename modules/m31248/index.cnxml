@@ -1,0 +1,844 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Learning Objects for Constructors in Java</title>
+  <metadata>
+  <md:content-id>m31248</md:content-id><md:title>Learning Objects for Constructors in Java</md:title>
+  <md:abstract>These learning objects explain constructors, which are used to create and initialize objects in Java.</md:abstract>
+  <md:uuid>e44169b2-6e4a-4398-b729-53233befb324</md:uuid>
+</metadata>
+<featured-links>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit below.
+       Changes to the links section in the source will not be saved. -->
+    <link-group type="prerequisite">
+      <link url="http://www.cs.joensuu.fi/jeliot/" strength="3">Jeliot Program Animation System</link>
+    </link-group>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit above.
+       Changes to the links section in the source will not be saved. -->
+</featured-links>
+<content>
+    <section id="cid1">
+      <title>Learning Objects for Constructors</title>
+      <para id="id2390431"><emphasis effect="bold">Concept</emphasis> The process of creating an object involves allocating memory for the object and assigning the reference to this block of memory to a variable. <emphasis effect="italics">Constructors</emphasis> enable arbitrary initialization of the object during its creation.</para>
+      <para id="eip-299">These source code of these learning objects can be found in
+<link resource="constructor.zip">constructor.zip</link>.
+</para><table id="id2391092" summary="">
+        <tgroup cols="4">
+          <tbody>
+            <row>
+              <entry>LO</entry>
+              <entry>Topic</entry>
+              <entry>Java Files (.java)</entry>
+              <entry>Prerequisites</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid1">"What are constructors for?"</link>
+              </entry>
+              <entry>What are constructors for?</entry>
+              <entry>Constructor01A, B, C</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid19">"Computation within constructors"</link>
+              </entry>
+              <entry>Computation within constructors</entry>
+              <entry>Constructor02</entry>
+              <entry>1</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid25">"Overloading constructors"</link>
+              </entry>
+              <entry>Overloading constructors</entry>
+              <entry>Constructor03</entry>
+              <entry>2</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid33">"Invoking an overloaded constructor from within a constructor"</link>
+              </entry>
+              <entry>Invoking another constructor</entry>
+              <entry>Constructor04</entry>
+              <entry>3</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid40">"Explicit default constructors"</link>
+              </entry>
+              <entry>Explicit default constructors</entry>
+              <entry>Constructor05</entry>
+              <entry>3</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid46">"Constructors for subclasses"</link>
+              </entry>
+              <entry>Constructors for subclasses</entry>
+              <entry>Constructor06A, B, C</entry>
+              <entry>3</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid52">"Constructors with object parameters"</link>
+              </entry>
+              <entry>Constructors with object parameters</entry>
+              <entry>Constructor07</entry>
+              <entry>3</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid58">"Constructors with subclass object parameters"</link>
+              </entry>
+              <entry>Constructors with subclass</entry>
+              <entry/>
+              <entry/>
+            </row>
+            <row>
+              <entry/>
+              <entry>object parameters</entry>
+              <entry>Constructor08</entry>
+              <entry>6, 7</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <!--empty paragraphs get left behind.-->
+      <para id="id2391453"><emphasis effect="bold">Program</emphasis> The example used in these LOs is class <code display="inline">Song</code>
+with three fields: the <code display="inline">name</code> of the song, the length of the song
+in <code display="inline">seconds</code> and the <code display="inline">pricePerSecond</code>. The class is to be
+used to implement a website which charges for downloading the song; the
+price is the product of the length of the song in second and the price
+per second. To focus the discussion on constructors, the fields are not
+declared private.</para>
+      <section id="uid1">
+        <title>What are constructors for?</title>
+        <para id="id2391497"><emphasis effect="bold">Concept</emphasis> An object is created by allocating memory for its fields. The fields are given the default values for their types. A reference to the object is returned and assigned to a variable; the reference can be used to access the fields and methods of the object.</para>
+        <para id="id2391508">
+          <emphasis effect="bold">Program: Constructor01B.java</emphasis>
+        </para>
+        <code id="id2391516" display="block">// Learning Object Constructor01A
+//    what are constructors for?
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+ 
+    public double computePrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+public class Constructor01A {
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song();
+        song1.name = "Waterloo";
+        song1.seconds = 164;
+        song1.pricePerSecond = 0.01;
+        double price = song1.computePrice();
+    }
+}
+</code>
+        <para id="id2391705">If a constructor is not explicitly declared a default constructor is called.</para>
+        <list id="id2391709" display="block" list-type="bulleted">
+          <item id="uid2">The variable <code display="inline">song1</code> is allocated and contains the null value.
+</item>
+          <item id="uid3">Memory is allocated for the fields of the object; this is displayed in the Instance and Array Area. Default values are assigned to the three fields.
+</item>
+          <item id="uid4">The default constructor is called
+but does nothing except return a reference to the object.
+</item>
+          <item id="uid5">The reference is stored in the variable <code display="inline">song1</code>.
+</item>
+          <item id="uid6">The reference in <code display="inline">song1</code> is used to assign values to the fields of the object.
+</item>
+          <item id="uid7">The reference in <code display="inline">song1</code> is used to call the method <code display="inline">computePrice</code> on the object; the method computes and returns the price,
+which is assigned to the variable <code display="inline">price</code>.
+</item>
+        </list>
+        <para id="id2391825"><emphasis effect="bold">Concept</emphasis> An explicit constructor method can be declared and used
+to initialize each object.
+The constructor method is identified by a special syntax: the name of the method is the same as the name of the class and <emphasis effect="italics">there is no return type</emphasis> (because the value returned is of the type of the class itself).</para>
+        <para id="id2391843">
+          <emphasis effect="bold">Program: Constructor01B.java</emphasis>
+        </para>
+        <code id="id2391850" display="block">// Learning Object Constructor01B
+//    what are constructors for?
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+ 
+    Song() {
+        name = "Waterloo";
+        seconds = 164;
+        pricePerSecond = 0.01;
+    }
+ 
+    public double computePrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+public class Constructor01B {
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song();
+        double price = song1.computePrice();
+    }
+}
+</code>
+        <para id="id2392063">This program is the same as the previous one except that the assignment of nondefault values to the fields of the object is moved to an explicit constructor.</para>
+        <list id="id2392069" display="block" list-type="bulleted">
+          <item id="uid8">The variable <code display="inline">song1</code> is allocated and contains the null value.
+</item>
+          <item id="uid9">Memory is allocated for the fields of the object; this is displayed in the Instance and Array Area. Default values are assigned to the three fields.
+</item>
+          <item id="uid10">The constructor is called and assigns values to the three fields;
+then it returns a reference to the object.
+</item>
+          <item id="uid11">The reference is stored in the variable <code display="inline">song1</code>.
+</item>
+          <item id="uid12">The reference in <code display="inline">song1</code> is used to call the method <code display="inline">computePrice</code> on the object; the method computes and returns the price,
+which is assigned to the variable <code display="inline">price</code>.
+</item>
+        </list>
+        <para id="id2392166"><emphasis effect="bold">Exercise</emphasis> Add the creation of a second object <code display="inline">song2</code> to the
+program and verify that it is initialized to the same values.</para>
+        <para id="id2392181"><emphasis effect="bold">Concept</emphasis> Of course, it is highly unlikely that all objects created from a class will be initialized with the same values. A constructor can have formal parameters like any other method and is called with actual parameters.</para>
+        <para id="id2392192">
+          <emphasis effect="bold">Program: Constructor01C.java</emphasis>
+        </para>
+        <code id="id2392199" display="block">// Learning Object Constructor01C
+//    what are constructors for?
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+ 
+    Song(String n, int s, double p) {
+        name = n;
+        seconds = s;
+        pricePerSecond = p;
+    }
+ 
+    public double computePrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+public class Constructor01C {
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song("Waterloo", 164, 0.01);
+        double price = song1.computePrice();
+    }
+}
+</code>
+        <para id="id2392412">This program is the same as the previous one except that the constructor has formal parameters and the actual parameters passed to the constructor are assigned to the fields of the object.</para>
+        <list id="id2392419" display="block" list-type="bulleted">
+          <item id="uid13">The variable <code display="inline">song1</code> is allocated and contains the null value.
+</item>
+          <item id="uid14">Memory is allocated for the fields of the object; this is displayed in the Instance and Array Area. Default values are assigned to the three fields.
+</item>
+          <item id="uid15">The constructor is called with three actual parameters; these values are assigned to the formal parameters of the constructor method.
+</item>
+          <item id="uid16">The values of the formal parameters are assigned to the three fields; then the constructor returns a reference to the object.
+</item>
+          <item id="uid17">The reference is stored in the variable <code display="inline">song1</code>.
+</item>
+          <item id="uid18">The reference in <code display="inline">song1</code> is used to call the method <code display="inline">computePrice</code> on the object; the method computes and returns the price,
+which is assigned to the variable <code display="inline">price</code>.
+</item>
+        </list>
+        <para id="id2392532"><emphasis effect="bold">Exercise</emphasis> Modify the class so that the second parameter passes
+the number of minutes; the value of the field <code display="inline">seconds</code> will have
+to be computed in the constructor.</para>
+      </section>
+      <section id="uid19">
+        <title>Computation within constructors</title>
+        <para id="id2392559"><emphasis effect="bold">Concept</emphasis> Constructors are often used simply for assigning initial values to fields of an object; however, an arbitrary initializing computation can be carried out within the constructor.</para>
+        <para id="id2392570">
+          <emphasis effect="bold">Program: Constructor02.java</emphasis>
+        </para>
+        <code id="id2392577" display="block">// Learning Object Constructor02
+//    computation within constructors
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+    double price;
+ 
+    Song(String n, int s, double p) {
+        name = n;
+        seconds = s;
+        pricePerSecond = p;
+        price = computePrice();
+    }
+ 
+    private double computePrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+public class Constructor02 {
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song("Waterloo", 164, 0.01);
+    }
+}
+</code>
+        <para id="id2392807">The price of a song will not change as long as the fields <code display="inline">second</code> and
+<code display="inline">pricePerSecond</code> do not change; to avoid recomputing the price each time it is needed,
+the class contains a field <code display="inline">price</code> whose value is computed <emphasis effect="italics">within</emphasis> the
+constructor. The method <code display="inline">computePrice</code> is declared to be <code display="inline">private</code>
+because it is needed only by the constructor.</para>
+        <list id="id2392849" display="block" list-type="bulleted">
+          <item id="uid20">The variable <code display="inline">song1</code> is allocated and contains the null value.
+</item>
+          <item id="uid21">Memory is allocated for the fields of the object and default values are assigned to the three fields.
+</item>
+          <item id="uid22">The constructor is called with three actual parameters; these values are assigned to the formal parameters of the constructor method and the values of the formal parameters are assigned to the three fields.
+</item>
+          <item id="uid23">The method <code display="inline">computePrice</code> is called; it returns a value which stored in the field <code display="inline">price</code>.
+</item>
+          <item id="uid24">The constructor returns a reference to the object, which is stored in the variable <code display="inline">song1</code>. The field <code display="inline">price</code> can be accessed to obtain the price of a song.
+</item>
+        </list>
+        <para id="id2392951"><emphasis effect="bold">Exercise</emphasis> Modify the class so that no song has a price greater than two
+currency units.</para>
+      </section>
+      <section id="uid25">
+        <title>Overloading constructors</title>
+        <para id="id2392971"><emphasis effect="bold">Concept</emphasis> Constructors can be <emphasis effect="italics">overloaded</emphasis> like other methods. A method is overloaded when there is more than one method with the same name; the parameter signature is used to decide which method to call. For constructors, overloading is usually done when some of the fields of an object can be initialized with default values, although we want to retain
+the possibility of explicitly supplying all the initial values.</para>
+        <para id="id2392991">
+          <emphasis effect="bold">Program: Constructor03.java</emphasis>
+        </para>
+        <code id="id2392998" display="block">// Learning Object Constructor03
+//    overloading constructors
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+    double price;
+    final static double DEFAULT_PRICE = 0.005;
+ 
+    Song(String n, int s, double p) {
+        name = n;
+        seconds = s;
+        pricePerSecond = p;
+        price = computePrice();
+    }
+ 
+    Song(String n, int s) {
+        name = n;
+        seconds = s;
+        pricePerSecond = DEFAULT_PRICE;
+        price = computePrice();
+    }
+ 
+    private double computePrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+public class Constructor03 {
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song("Waterloo", 164, 0.01);
+        Song song2 = new Song("Fernando", 253);
+    }
+}
+</code>
+        <para id="id2393312">The website charges a uniform price per second for all songs, except for special offers. We define two constructors, one that specifies a price for special offers and another that uses a default price for ordinary songs.</para>
+        <list id="id2393319" display="block" list-type="bulleted">
+          <item id="uid26">The value of the static constant <code display="inline">DEFAULT_PRICE</code> is set as soon as the class is loaded and is displayed in the Constant area.
+</item>
+          <item id="uid27">The variable <code display="inline">song1</code> is allocated and contains the null value.
+</item>
+          <item id="uid28">Memory is allocated for the <emphasis effect="italics">four</emphasis> fields of the object and default values are assigned to the fields.
+</item>
+          <item id="uid29">The constructor is called with <emphasis effect="italics">three</emphasis> actual parameters; the call is resolved so that the first constructor is executed. These values are assigned to the formal parameters of the constructor method and the values of the formal parameters are assigned to the three fields.
+</item>
+          <item id="uid30">The method <code display="inline">computePrice</code> is called; it returns a value which stored in the field <code display="inline">price</code>.
+</item>
+          <item id="uid31">The constructor returns a reference to the object, which is stored in the variable <code display="inline">song1</code>.
+</item>
+          <item id="uid32">The computation is then repeated for <code display="inline">song2</code>.
+Since the constructor is called with just two parameters (for <code display="inline">name</code> and <code display="inline">seconds</code>),
+the second constructor is executed.
+The value of the field <code display="inline">pricePerSecond</code> is assigned from the constant, not from a parameter.
+</item>
+        </list>
+        <para id="id2393485"><emphasis effect="bold">Exercise</emphasis> Modify the class to include a constructor with one parameter for the <code display="inline">name</code> and with a default song length of three minutes.</para>
+        <para id="id2393500"><emphasis effect="bold">Exercise</emphasis> Modify the class to include a constructor with no parameters, so that all fields receive default values. Is there any meaning to the following constructor?</para>
+        <code id="id2393511" display="block">Song() {
+}
+</code>
+      </section>
+      <section id="uid33">
+        <title>Invoking an overloaded constructor from within a constructor</title>
+        <para id="id2393540"><emphasis effect="bold">Concept</emphasis> Constructors can be <emphasis effect="italics">overloaded</emphasis> like other methods. A method is overloaded when there is more than one method with the same name; the parameter signature is used to decide which method to call. For constructors, overloading is usually done when some of the fields of an object can be initialized with default values, although we want to retain
+the possibility of explicitly supplying all the initial values. In such cases, it is convenient to invoke one constructor from within another in order to avoid duplicating code. Invoking the method <code display="inline">this</code> within one constructor calls another constructor
+with the appropriate parameter signature.</para>
+        <para id="id2390963">
+          <emphasis effect="bold">Program: Constructor04.java</emphasis>
+        </para>
+        <code id="id2390970" display="block">// Learning Object Constructor04
+//    invoking one constructor from another
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+    double price;
+    final static double DEFAULT_PRICE = 0.005;
+ 
+    Song(String n, int s, double p) {
+        name = n;
+        seconds = s;
+        pricePerSecond = p;
+        price = computePrice();
+    }
+ 
+    Song(String n, int s) {
+        this(n, s, DEFAULT_PRICE);
+    }
+ 
+    private double computePrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+public class Constructor04 {
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song("Waterloo", 164);
+    }
+}
+</code>
+        <para id="id2393990">The website charges a uniform price per second for all songs, except for special offers. We define two constructors, one that specifies a price for special offers and another that uses a default price for ordinary songs.</para>
+        <list id="id2393998" display="block" list-type="bulleted">
+          <item id="uid34">The value of the static constant <code display="inline">DEFAULT_PRICE</code> is set as soon as the class is loaded and is displayed in the Constant area.
+</item>
+          <item id="uid35">The variable <code display="inline">song1</code> is allocated and contains the null value.
+</item>
+          <item id="uid36">Memory is allocated for the <emphasis effect="italics">four</emphasis> fields of the object and default values are assigned to the fields.
+</item>
+          <item id="uid37">The constructor is called with <emphasis effect="italics">two</emphasis> actual parameters; the call is resolved so that it is the second constructor that is executed.
+</item>
+          <item id="uid38">The two parameters, together with the default price, are immediately used to call the
+first constructor that has three parameters. The method name <code display="inline">this</code> means: call a
+constructor from <emphasis effect="italics">this</emphasis> class. This constructor initializes the first three fields from the parameters, and the value of the fourth field is computed by calling the method <code display="inline">computePrice</code>.
+</item>
+          <item id="uid39">The constructor returns a reference to the object, which is stored in the variable <code display="inline">song1</code>.
+</item>
+        </list>
+        <para id="id2394132"><emphasis effect="bold">Exercise</emphasis> Modify the class to include a constructor with one parameter, the name, and with a default song length of three minutes. Can this constructor call the two-parameter constructor which in turn calls the three-parameter constructor? Can a constructor call <emphasis effect="italics">two</emphasis> other constructors, one after another?</para>
+      </section>
+      <section id="uid40">
+        <title>Explicit default constructors</title>
+        <para id="id2394161"><emphasis effect="bold">Concept</emphasis> When no constructor is explicitly written in a class, a default implicit constructor with no parameters exists; this constructor does nothing. If, however, one or more explicit constructors are given, there is no longer a constructor with no parameters.
+Should you want one, you have to write it explicitly.</para>
+        <para id="id2394174">
+          <emphasis effect="bold">Program: Constructor05.java</emphasis>
+        </para>
+        <code id="id2394181" display="block">// Learning Object Constructor05
+//    explicit default constructors
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+    double price;
+ 
+    Song(String n, int s, double p) {
+        name = n;
+        seconds = s;
+        pricePerSecond = p;
+        price = computePrice();
+    }
+ 
+    Song() {
+        this("No song", 0, 0.0);
+    }
+ 
+    private double computePrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+public class Constructor05 {
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song();
+    }
+}
+</code>
+        <para id="id2394447">This program includes an explicit constructor with no parameters that calls the constructor with three parameters to perform initialization.</para>
+        <list id="id2394453" display="block" list-type="bulleted">
+          <item id="uid41">The variable <code display="inline">song1</code> is allocated and contains the null value.
+</item>
+          <item id="uid42">Memory is allocated for the <emphasis effect="italics">four</emphasis> fields of the object and default values are assigned to the fields.
+</item>
+          <item id="uid43">The constructor is called with <emphasis effect="italics">no</emphasis> actual parameters; the call is resolved so that it is the second constructor that is executed.
+</item>
+          <item id="uid44">Three constant values are used to call the first constructor. The method name <code display="inline">this</code> means: call a constructor from <emphasis effect="italics">this</emphasis> class.
+This constructor initializes the first three fields from the parameters, and the value of the fourth field is computed by calling the method <code display="inline">computePrice</code>.
+</item>
+          <item id="uid45">The constructor returns a reference to the object, which is stored in the variable <code display="inline">song1</code>.
+</item>
+        </list>
+        <para id="id2394567"><emphasis effect="bold">Exercise</emphasis> Modify the class so that the constructor without parameters
+obtains initial values from the input.</para>
+      </section>
+      <section id="uid46">
+        <title>Constructors for subclasses</title>
+        <para id="id2394587"><emphasis effect="bold">Concept</emphasis> Constructors are <emphasis effect="italics">not</emphasis> inherited. You must
+explicitly define a constructor for a subclass (with or without
+parameters). As its first statement, the constructor for the subclass must
+call a constructor for the superclass using the method <code display="inline">super</code>.</para>
+        <para id="id2394610">
+          <emphasis effect="bold">Program: Constructor06A.java</emphasis>
+        </para>
+        <code id="id2394617" display="block">// Learning Object Constructor06A
+//    constructors for subclasses
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+    double price;
+ 
+    Song(String n, int s, double p) {
+        name = n;
+        seconds = s;
+        pricePerSecond = p;
+        price = computePrice();
+    }
+ 
+    private double computePrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+class DiscountSong extends Song {
+    double discount;
+ 
+    DiscountSong(String n, int s, double p, double d) {
+        super(n, s, p);
+        discount = d;
+    }
+ 
+    private double computePrice() {
+        return seconds * pricePerSecond * discount;
+    }
+}
+ 
+public class Constructor06A {
+    public static void main(/*String[] args*/) {
+        DiscountSong song1 = new DiscountSong("Waterloo", 164, 0.01, 0.8);
+        double price = song1.price;
+    }
+}
+</code>
+        <para id="id2394976">The website wants to sell certain songs at a discount.
+The subclass <code display="inline">DiscountSong</code> inherits from class
+<code display="inline">Song</code>, adds a field <code display="inline">discount</code> and overrides
+<code display="inline">computePrice</code> to include <code display="inline">discount</code> in the computation.
+The constructor for the subclass calls the three-parameter constructor for
+the superclass, passing it the three parameters that it expects. The
+fourth parameter is used directly in the constructor <code display="inline">DiscountSong</code>
+to initialize the field <code display="inline">discount</code>.</para>
+        <list id="id2395025" display="block" list-type="bulleted">
+          <item id="uid47">The variable <code display="inline">song1</code> is allocated and contains the null value.
+</item>
+          <item id="uid48">Memory is allocated for the <emphasis effect="italics">five</emphasis> fields of the object of the subclass <code display="inline">DiscountSong</code> and default values are assigned to the fields.
+Four fields inherited from the superclass and one field <code display="inline">discount</code>
+added by the subclass.
+</item>
+          <item id="uid49">The constructor for the subclass <code display="inline">DiscountSong</code> is called
+with four parameters. It calls the constructor for the superclass
+<code display="inline">Song</code> which assigns values to three fields from the parameters and
+the fourth by calling <code display="inline">computePrice</code>.
+</item>
+          <item id="uid50">The superclass constructor returns and then the fourth parameter of
+the subclass constructor is assigned to the field <code display="inline">discount</code>.
+</item>
+          <item id="uid51">The reference to the subclass object is returned and assigned to a
+variable <code display="inline">song1</code> of that type.
+</item>
+        </list>
+        <para id="id2395151">Unfortunately, this does not do what we intended, because the superclass
+method for <code display="inline">computePrice</code> is used to compute <code display="inline">price</code>
+instead of the method from the subclass.</para>
+        <para id="id2395169"><emphasis effect="bold">Exercise</emphasis> Could <code display="inline">song1</code> be declared to be of type
+<code display="inline">Song</code>? Explain your answer.</para>
+        <para id="id2395189">
+          <emphasis effect="bold">Program: Constructor06B.java</emphasis>
+        </para>
+        <code id="id2395198" display="block">// Learning Object Constructor06B
+//    constructors for subclasses
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+    double price;
+ 
+    Song(String n, int s, double p) {
+        name = n;
+        seconds = s;
+        pricePerSecond = p;
+        price = computePrice();
+    }
+ 
+    private double computePrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+class DiscountSong extends Song {
+    double discount;
+ 
+    DiscountSong(String n, int s, double p, double d) {
+        super(n, s, p);
+        discount = d;
+        price = computePrice();
+    }
+ 
+    private double computePrice() {
+        return seconds * pricePerSecond * discount;
+    }
+}
+ 
+public class Constructor06B {
+    public static void main(/*String[] args*/) {
+        DiscountSong song1 = new DiscountSong("Waterloo", 164, 0.01, 0.8);
+        double price = song1.price;
+    }
+}
+</code>
+        <para id="id2395567">The problem can be solved by adding a call to
+<code display="inline">computePrice</code> in the constructor for the subclass.</para>
+        <para id="id2395577">Check this by executing the code and ensuring that the discounted price is computed.</para>
+        <para id="id2395582">The disadvantage of this solution is that we are calling
+<code display="inline">computePrice</code> twice.</para>
+        <para id="id2395592">
+          <emphasis effect="bold">Program: Constructor06C.java</emphasis>
+        </para>
+        <code id="id2395599" display="block">// Learning Object Constructor06C
+//    constructors for subclasses
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+ 
+    Song(String n, int s, double p) {
+        name = n;
+        seconds = s;
+        pricePerSecond = p;
+    }
+ 
+    public double getPrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+class DiscountSong extends Song {
+    double discount;
+ 
+    DiscountSong(String n, int s, double p, double d) {
+        super(n, s, p);
+        discount = d;
+    }
+ 
+    public double getPrice() {
+        return seconds * pricePerSecond * discount;
+    }
+}
+ 
+public class Constructor06C {
+    public static void main(/*String[] args*/) {
+        Song song1 = new DiscountSong("Waterloo", 164, 0.01, 0.8);
+        double price = song1.getPrice();
+    }
+}
+</code>
+        <para id="id2395940">Normally in an object-oriented program, all the
+fields of an object are private and an accessor method like
+<code display="inline">getPrice()</code> is used to access the values of the fields.
+If this is done, the computation of the price can be placed in
+the accessor for the superclass and overridden in accessor for the
+subclass.</para>
+        <para id="id2395954">Check this by executing the code and ensuring that the discounted price is computed.</para>
+        <para id="id2395959">The disadvantage of this solution is that the computation is
+performed for each access of the field <code display="inline">price</code>.</para>
+        <para id="id2395969"><emphasis effect="bold">Exercise</emphasis> Develop other solutions for this problem: (a) Call
+<code display="inline">computePrice</code> explicitly after the call to the constructor; (b)
+Modify <code display="inline">getPrice</code> to compute the value of <code display="inline">price</code> on the first
+call and save it for future calls. Summarize the advantages and
+disadvantages of all the solutions for this problem.</para>
+      </section>
+      <section id="uid52">
+        <title>Constructors with object parameters</title>
+        <para id="id2396009"><emphasis effect="bold">Concept</emphasis> An object can contain fields of other user-defined
+objects, not just of primitive and predefined types. There is no
+difference in the constructors, except that references to objects are
+passed as actual parameters and assigned to fields of the object.</para>
+        <para id="id2396021">
+          <emphasis effect="bold">Program: Constructor07.java</emphasis>
+        </para>
+        <code id="id2396028" display="block">// Learning Object Constructor07
+//    constructors with object parameters
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+ 
+    Song(String n, int s, double p) {
+        name = n;
+        seconds = s;
+        pricePerSecond = p;
+    }
+ 
+    public double computePrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+class SongSet {
+    public Song track1, track2;
+ 
+    public SongSet(Song t1, Song t2) {
+        track1 = t1; track2 = t2;
+    }
+}
+ 
+public class Constructor07 {
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song("Waterloo", 164, 0.01);
+        Song song2 = new Song("Fernando", 253, 0.01);
+        SongSet set = new SongSet(song1, song2);
+        double price1 = set.track1.computePrice();
+        double price2 = set.track2.computePrice();
+    }
+}
+</code>
+        <para id="id2396352">Two objects of type <code display="inline">Song</code> are allocated and
+assigned to fields of another object of type
+<code display="inline">SongSet</code> which has two fields of type <code display="inline">Song</code>.</para>
+        <list id="id2396374" display="block" list-type="bulleted">
+          <item id="uid53">Execute the program until the two objects of type <code display="inline">Song</code> are
+allocated and their references assigned to the variables <code display="inline">song1</code> and <code display="inline">song2</code>.
+(You may want to select <code display="inline">Animation / Run Until (ctrl-T)</code> to skip the
+animation of these declarations.)
+</item>
+          <item id="uid54">A variable <code display="inline">set</code> is allocated. An object of type
+<code display="inline">SongSet</code> is allocated with default null fields.
+</item>
+          <item id="uid55">The constructor for <code display="inline">SongSet</code> is called and the references in the two variables
+<code display="inline">song1</code> and <code display="inline">song2</code> are passed as actual parameters. These references
+are stored in the two fields <code display="inline">track1</code> and <code display="inline">track2</code>.
+</item>
+          <item id="uid56">The reference to the object of class <code display="inline">SongSet</code>
+is returned and stored in <code display="inline">set</code>.
+</item>
+          <item id="uid57">The prices of the two objects are obtained and stored in the variables
+<code display="inline">price1</code> and <code display="inline">price2</code>. <code display="inline">set</code> is an object
+of type <code display="inline">Songset</code>, while <code display="inline">set.track1</code> is an object of type
+<code display="inline">Song</code> and thus can be used to call the method
+<code display="inline">computePrice</code>.
+</item>
+        </list>
+        <para id="id2396561"><emphasis effect="bold">Exercise</emphasis> Modify the program so that the variables <code display="inline">song1</code> and
+<code display="inline">song2</code> are not used; instead, the constructors for the songs are
+embedded within the constructor call for <code display="inline">SongSet</code>.</para>
+        <para id="id2396589"><emphasis effect="bold">Exercise</emphasis> Modify the program so the constructors for the songs are
+call within the constructor for <code display="inline">SongSet</code>. Under what circumstances
+would this be done?</para>
+      </section>
+      <section id="uid58">
+        <title>Constructors with subclass object parameters</title>
+        <para id="id2396615"><emphasis effect="bold">Concept</emphasis> An object of a subclass is also an object of the type of the
+superclass. Therefore, it can be used when an actual parameter is expected.</para>
+        <para id="id2396625">
+          <emphasis effect="bold">Program: Constructor08.java</emphasis>
+        </para>
+        <code id="id2396632" display="block">// Learning Object Constructor08
+//    constructors with subclass object parameters
+class Song {
+    String name;
+    int seconds;
+    double pricePerSecond;
+ 
+    Song(String n, int s, double p) {
+        name = n;
+        seconds = s;
+        pricePerSecond = p;
+    }
+ 
+    public double computePrice() {
+        return seconds * pricePerSecond;
+    }
+}
+ 
+class DiscountSong extends Song {
+    double discount;
+ 
+    DiscountSong(String n, int s, double p, double d) {
+        super(n, s, p);
+        discount = d;
+    }
+ 
+    public double computePrice() {
+        return seconds * pricePerSecond * discount;
+    }
+}
+ 
+class SongSet {
+    public Song track1, track2;
+ 
+    public SongSet(Song t1, Song t2) {
+        track1 = t1; track2 = t2;
+    }
+}
+ 
+public class Constructor08 {
+    public static void main(/*String[] args*/) {
+        Song song1 = new Song("Waterloo", 164, 0.01);
+        DiscountSong song2 = new DiscountSong("Fernando", 253, 0.01, 0.8);
+        SongSet set = new SongSet(song1, song2);
+        double price1 = set.track1.computePrice();
+        double price2 = set.track2.computePrice();
+    }
+}
+</code>
+        <para id="id2397076">We allocate two objects, one of type <code display="inline">Song</code> and
+one of type <code display="inline">DiscountSong</code>, and use them as actual parameters in
+the constructor for an object of type <code display="inline">SongSet</code> that expects two
+parameters of type <code display="inline">Song</code>.</para>
+        <list id="id2397104" display="block" list-type="bulleted">
+          <item id="uid59">Execute the program until the two objects one of type <code display="inline">Song</code>
+the other of type <code display="inline">DiscountSong</code> are
+allocated and their references assigned to the variables <code display="inline">song1</code> and <code display="inline">song2</code>,
+respectively.
+(You may want to select <code display="inline">Animation / Run Until (ctrl-T)</code> to skip the
+animation of these declarations.)
+</item>
+          <item id="uid60">The variable <code display="inline">set</code> is allocated, and an object of type
+<code display="inline">SongSet</code> is allocated with default null fields.
+</item>
+          <item id="uid61">The constructor for <code display="inline">SongSet</code> is called and the references in the two variables
+<code display="inline">song1</code> and <code display="inline">song2</code> are passed as actual parameters. These references
+are stored in the two fields <code display="inline">track1</code> and <code display="inline">track2</code>.
+</item>
+          <item id="uid62">The reference to the object of class <code display="inline">SongSet</code>
+is returned and stored in <code display="inline">set</code>.
+</item>
+          <item id="uid63">The prices of the two objects are obtained and stored in the variables
+<code display="inline">price1</code> and <code display="inline">price2</code>. <code display="inline">set</code> is an object
+of type <code display="inline">Songset</code>, while <code display="inline">set.track1</code> is an object of type
+<code display="inline">Song</code> and thus can be used to call the method
+<code display="inline">computePrice</code> of that class. Similarly for <code display="inline">price2</code>,
+except that <code display="inline">set.track2</code> is an object of type
+<code display="inline">DiscountSong</code>; check that the method <code display="inline">computePrice</code> of this
+class is called.
+</item>
+        </list>
+        <para id="id2397323"><emphasis effect="bold">Exercise</emphasis> Can <code display="inline">s2</code> in the main method be declared to be of type
+<code display="inline">Song</code>? Explain.</para>
+      </section>
+    </section>
+  </content>
+</document>

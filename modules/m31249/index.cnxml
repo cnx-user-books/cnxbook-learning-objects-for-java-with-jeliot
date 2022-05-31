@@ -1,0 +1,1181 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Learning Objects for Inheritance in Java</title>
+  <metadata>
+  <md:content-id>m31249</md:content-id><md:title>Learning Objects for Inheritance in Java</md:title>
+  <md:abstract>These learning objects concern inheritance in Java. One class can be derived from another, inheriting its fields and methods.</md:abstract>
+  <md:uuid>ff64e65a-3eb1-43e8-9f99-07c2ab0f2917</md:uuid>
+</metadata>
+<featured-links>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit below.
+       Changes to the links section in the source will not be saved. -->
+    <link-group type="prerequisite">
+      <link url="http://www.cs.joensuu.fi/jeliot/" strength="3">Jeliot Program Animation System</link>
+    </link-group>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit above.
+       Changes to the links section in the source will not be saved. -->
+</featured-links>
+<content>
+    <section id="cid1">
+      <title>Learning Objects for Inheritance</title>
+      <para id="id154487"><emphasis effect="bold">Concept</emphasis> <emphasis effect="italics">Inheritance</emphasis> is an important technique for
+structuring object-oriented programs. Given a class (called a
+<emphasis effect="italics">superclass</emphasis>) it can be extended to a <emphasis effect="italics">subclass</emphasis>. The
+subclass inherits all the fields of the superclass and it can add
+additional fields. The subclass inherits methods of the superclass and it can
+add new methods or override the inherited methods with its own versions.</para>
+      <para id="eip-102">These source code of these learning objects can be found in
+<link resource="inheritance.zip">inheritance.zip</link>.
+</para><table id="id154513" summary="">
+        <tgroup cols="4">
+          <tbody>
+            <row>
+              <entry>LO</entry>
+              <entry>Topic</entry>
+              <entry>Java Files (.java)</entry>
+              <entry>Prerequisites</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid7">"Inheriting fields"</link>
+              </entry>
+              <entry>Inheriting fields</entry>
+              <entry>Inheritance01</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid10">"Inheriting methods"</link>
+              </entry>
+              <entry>Inheriting and overriding methods</entry>
+              <entry>Inheritance02</entry>
+              <entry>1</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid17">"Dynamic dispatching"</link>
+              </entry>
+              <entry>Dynamic dispatching</entry>
+              <entry>Inheritance03</entry>
+              <entry>2</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid25">"Downcasting"</link>
+              </entry>
+              <entry>Downcasting</entry>
+              <entry>Inheritance04</entry>
+              <entry>3</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid32">"Heterogeneous data structures"</link>
+              </entry>
+              <entry>Heterogeneous data structures</entry>
+              <entry>Inheritance05</entry>
+              <entry>4</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid35">"Abstract classes"</link>
+              </entry>
+              <entry>Abstract classes</entry>
+              <entry>Inheritance06</entry>
+              <entry>5</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid38">"Equals"</link>
+              </entry>
+              <entry>Equals</entry>
+              <entry>Inheritance07A, B, C</entry>
+              <entry>2</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid55">"Clone"</link>
+              </entry>
+              <entry>Clone</entry>
+              <entry>Inheritance08</entry>
+              <entry>2</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid61">"Overloading vs. overriding"</link>
+              </entry>
+              <entry>Overloading vs. overriding</entry>
+              <entry>Inheritance09</entry>
+              <entry>3</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <!--empty paragraphs get left behind.-->
+      <para id="id155131"><emphasis effect="bold">Program</emphasis> The running example is a framework for the simulation of
+moving particles. There is a class <code display="inline">Particle</code> with a field
+<code display="inline">position</code> that is updated by the method <code display="inline">newPosition</code>.
+There are three subclasses:</para>
+      <list id="id155155" display="block" list-type="bulleted">
+        <item id="uid1"><code display="inline">AParticle</code> is derived directly from <code display="inline">Particle</code> and adds the field
+<code display="inline">spin</code>.
+The method <code display="inline">newPosition</code> is overridden.
+</item>
+        <item id="uid2"><code display="inline">BParticle</code> is derived directly from <code display="inline">Particle</code> and adds the field
+<code display="inline">charge</code>.
+The method <code display="inline">newPosition</code> is <emphasis effect="italics">not</emphasis> overridden.
+</item>
+        <item id="uid3"><code display="inline">CParticle</code> is derived directly from <code display="inline">BParticle</code> and thus
+indirectly from <code display="inline">AParticle</code>.
+It adds the field
+<code display="inline">strange</code>; the method <code display="inline">newPosition</code> is overridden.
+</item>
+      </list>
+      <para id="id155278">For each program the following initialization is performed and will not
+be explicitly mentioned for each learning object; instead, the step
+“the objects are created” will be listed:</para>
+      <list id="id155285" display="block" list-type="bulleted">
+        <item id="uid4">Variable are declared and assigned the null value.
+</item>
+        <item id="uid5">Memory is allocated for each object's fields and are given default
+values. For a subclass, these fields include all fields of its superclasses.
+</item>
+        <item id="uid6">In the constructors, a subclass calls <code display="inline">super</code> to initialize
+the fields declared by the superclasses and then initializes its own fields.
+</item>
+      </list>
+      <para id="id155330"><emphasis effect="bold">Tip:</emphasis> Use <code display="inline">Animation / Run Until ...</code> to skip over the animation
+of the initialization.</para>
+      <para id="id155343"><emphasis effect="bold">Tip:</emphasis> Several of the LOs will ask you to check that a certain version
+of a method is called. This can be done by looking at the source code in the left panel:
+the method called is highlighted in blue.</para>
+      <section id="uid7">
+        <title>Inheriting fields</title>
+        <para id="id155360"><emphasis effect="bold">Concept</emphasis>
+Subclasses inherit all the fields of its superclasses; they can also add
+fields of their own.</para>
+        <para id="id155368">
+          <emphasis effect="bold">Program: Inheritance01.java</emphasis>
+        </para>
+        <code id="id155375" display="block">// Learning Object Inheritance01
+//    inheriting fields
+class Particle {
+    int position;
+ 
+    Particle(int p) {
+        position = p;
+    }
+ 
+    void newPosition(int delta) {
+        position = position + delta;
+    }
+}
+ 
+class AParticle extends Particle {
+    double spin;
+ 
+    AParticle(int p, double s) {
+        super(p);
+        spin = s;
+    }
+ 
+    void newPosition(int delta) {
+    if (spin &lt; delta)
+            position = position + delta;
+    }
+}
+ 
+class BParticle extends Particle {
+    int charge;
+ 
+    BParticle(int p, int c) {
+        super(p);
+        charge = c;
+    }
+}
+ 
+class CParticle extends BParticle {
+    boolean strange;
+ 
+    CParticle(int p, int c, boolean s) {
+        super(p, c);
+        strange = s;
+    }
+ 
+    void newPosition(int delta) {
+        if (strange)
+            position = position * charge;
+    }
+}
+ 
+class Inheritance01 {
+    public static void main(/*String[] args*/) {
+        Particle  p = new Particle(10);
+        AParticle a = new AParticle(20, 2.0);
+        BParticle b = new BParticle(30, 3);
+        CParticle c = new CParticle(40, 4, true);
+ 
+        int pPosition = p.position;
+        int aPosition = a.position;
+        double aSpin  = a.spin;
+        int bPosition = b.position;
+        int bCharge = b.charge;
+        int cPosition = c.position;
+        int cCharge = c.charge;
+        boolean cStrange = c.strange;
+    }
+}
+</code>
+        <para id="id155982">In this simple program objects of all four classes are created and their fields
+are read.</para>
+        <list id="id155986" display="block" list-type="bulleted">
+          <item id="uid8">The objects are created.
+</item>
+          <item id="uid9">For each field of each object, a variable is declared in the main method
+and the value of the field is assigned to it. Check that each value originates
+from the correct field.
+</item>
+        </list>
+        <para id="id156016"><emphasis effect="bold">Exercise</emphasis> In <code display="inline">CParticle</code>, add the declaration <code display="inline">int
+charge = -1;</code>. Compile and run the program. Is the output different?
+Explain what happens.</para>
+      </section>
+      <section id="uid10">
+        <title>Inheriting methods</title>
+        <para id="id156047"><emphasis effect="bold">Concept</emphasis>
+Subclasses inherit the methods of its superclasses and can add new methods
+of its own. You can override an inherited method by writing a new method
+with <emphasis effect="italics">the same signature</emphasis> as the inherited method.</para>
+        <para id="id156062">
+          <emphasis effect="bold">Program: Inheritance02.java</emphasis>
+        </para>
+        <code id="id156069" display="block">// Learning Object Inheritance02
+//    inheriting and overriding methods
+class Particle {
+    int position;
+ 
+    Particle(int p) {
+        position = p;
+    }
+ 
+    void newPosition(int delta) {
+        position = position + delta;
+    }
+}
+ 
+class AParticle extends Particle {
+    double spin;
+ 
+    AParticle(int p, double s) {
+        super(p);
+        spin = s;
+    }
+ 
+    void newPosition(int delta) {
+    if (spin &lt; delta)
+            position = position + delta;
+    }
+}
+class BParticle extends Particle {
+    int charge;
+ 
+    BParticle(int p, int c) {
+        super(p);
+        charge = c;
+    }
+}
+class CParticle extends BParticle {
+    boolean strange;
+ 
+    CParticle(int p, int c, boolean s) {
+        super(p, c);
+        strange = s;
+    }
+ 
+    void newPosition(int delta) {
+        if (strange)
+            position = position * charge;
+    }
+}
+ 
+class Inheritance02 {
+    public static void main(/*String[] args*/) {
+        Particle  p = new Particle(10);
+        AParticle a = new AParticle(10, 2.0);
+        BParticle b = new BParticle(10, 3);
+        CParticle c = new CParticle(10, 4, true);
+ 
+        p.newPosition(10);
+        int pPosition = p.position;
+        a.newPosition(10);
+        int aPosition = a.position;
+        b.newPosition(10);
+        int bPosition = b.position;
+        c.newPosition(10);
+        int cPosition = c.position;
+    }
+}
+</code>
+        <para id="id156662">This program calls the method <code display="inline">newPosition</code>, which
+is overridden in <code display="inline">AParticle</code> and <code display="inline">CParticle</code> but not in
+<code display="inline">BParticle</code>.</para>
+        <list id="id156689" display="block" list-type="bulleted">
+          <item id="uid11">The objects are created.
+</item>
+          <item id="uid12">Method <code display="inline">newPosition</code> is invoked for each object and the modified
+value of <code display="inline">position</code> is assigned to a variable.
+</item>
+          <item id="uid13">Check that the call on <code display="inline">p</code> calls the method defined in class
+<code display="inline">Particle</code>.
+</item>
+          <item id="uid14">Check that the call on <code display="inline">a</code> calls the method defined
+in the class <code display="inline">AParticle</code>; this method overrides the method declared
+in class <code display="inline">Particle</code>.
+</item>
+          <item id="uid15">Check that the call on <code display="inline">b</code> calls the method defined
+in the superclass <code display="inline">Particle</code>; since the method was <emphasis effect="italics">not</emphasis> overridden
+in <code display="inline">BParticle</code>, the method called is the one inherited from the superclass.
+</item>
+          <item id="uid16">Check that the call on <code display="inline">c</code> calls the method defined
+in the class <code display="inline">BParticle</code>; this method overrides the method declared
+in class <code display="inline">Particle</code>.
+</item>
+        </list>
+        <para id="id156847"><emphasis effect="bold">Exercise</emphasis> Remove the method <code display="inline">newPosition</code> from
+<code display="inline">CParticle</code>. Which method is invoked for <code display="inline">c.newPosition</code>?</para>
+        <para id="id156873"><emphasis effect="bold">Exercise</emphasis> Remove the method <code display="inline">newPosition</code> from
+<code display="inline">CParticle</code> and add a method with the same signature to
+<code display="inline">BParticle</code>. Which method is invoked for <code display="inline">c.newPosition</code>?</para>
+      </section>
+      <section id="uid17">
+        <title>Dynamic dispatching</title>
+        <para id="id156914"><emphasis effect="bold">Concept</emphasis> A variable <code display="inline">v</code> of type <code display="inline">T</code> can contain a
+reference to an object of type <code display="inline">T</code> or of the type of any subclass of
+<code display="inline">T</code>. When invoking <code display="inline">v.m</code> for some method <code display="inline">m</code> that is
+overridden in a subclass, it is the type of the <emphasis effect="italics">object</emphasis> currently
+referenced by <code display="inline">v</code> (not the type of the <emphasis effect="italics">variable</emphasis><code display="inline">v</code>) that determines which method is called. This is
+called <emphasis effect="italics">dynamic dispatching</emphasis> because the call is dispatched at
+runtime.</para>
+        <para id="id157161">
+          <emphasis effect="bold">Program: Inheritance03.java</emphasis>
+        </para>
+        <code id="id157168" display="block">// Learning Object Inheritance03
+//    dynamic dispatching
+class Particle {
+    int position;
+ 
+    Particle(int p) {
+        position = p;
+    }
+ 
+    void newPosition(int delta) {
+        position = position + delta;
+    }
+}
+ 
+class AParticle extends Particle {
+    double spin;
+ 
+    AParticle(int p, double s) {
+        super(p);
+        spin = s;
+    }
+ 
+    void newPosition(int delta) {
+    if (spin &lt; delta)
+            position = position + delta;
+    }
+}
+ 
+class BParticle extends Particle {
+    int charge;
+ 
+    BParticle(int p, int c) {
+        super(p);
+        charge = c;
+    }
+}
+ 
+class CParticle extends BParticle {
+    boolean strange;
+ 
+    CParticle(int p, int c, boolean s) {
+        super(p, c);
+        strange = s;
+    }
+ 
+    void newPosition(int delta) {
+        if (strange)
+            position = position * charge;
+    }
+}
+ 
+class Inheritance03 {
+    public static void main(/*String[] args*/) {
+        Particle  p = new Particle(10);
+        AParticle a = new AParticle(20, 2.0);
+        BParticle b = new BParticle(30, 3);
+        CParticle c = new CParticle(40, 4, true);
+ 
+        p.newPosition(10);
+        int pPosition = p.position;
+        p = a;
+        p.newPosition(10);
+        int aPosition = p.position;
+        p = b;
+        p.newPosition(10);
+        int bPosition = p.position;
+        p = c;
+        p.newPosition(10);
+        int cPosition = p.position;
+    }
+}
+</code>
+        <list id="id157802" display="block" list-type="bulleted">
+          <item id="uid18">The objects are created.
+</item>
+          <item id="uid19">The references to the objects are assigned one-by-one to the variable <code display="inline">p</code>,
+and then the method <code display="inline">newPosition</code> is invoked using <code display="inline">p</code>. The modified
+value of <code display="inline">position</code> is assigned to a variable.
+</item>
+          <item id="uid20">Check that the call on <code display="inline">p</code> invokes the method defined in class
+<code display="inline">Particle</code>.
+</item>
+          <item id="uid21">After assigning <code display="inline">a</code> to <code display="inline">p</code>, check that the call invokes the
+method defined in the class <code display="inline">AParticle</code>; this method overrides the method declared
+in class <code display="inline">Particle</code>. Although the type of <code display="inline">p</code> is class
+<code display="inline">Particle</code>, it holds a reference to an object whose type is
+class <code display="inline">AParticle</code> so the method of that class is called.
+</item>
+          <item id="uid22">Note that as a result of the assignment, the object of type <code display="inline">Particle</code>
+has become garbage.
+</item>
+          <item id="uid23">After assigning <code display="inline">b</code> to <code display="inline">p</code>, check that the call invokes the
+method defined in the superclass <code display="inline">Particle</code>; since the method was <emphasis effect="italics">not</emphasis>
+overridden in <code display="inline">BParticle</code>, the method called is the one inherited from the
+superclass.
+</item>
+          <item id="uid24">After assigning <code display="inline">c</code> to <code display="inline">p</code>, check that the call invokes the
+method defined in the class <code display="inline">CParticle</code>; this method overrides the method declared
+in class <code display="inline">Particle</code>. Although the type of <code display="inline">p</code> is class
+<code display="inline">Particle</code>, it holds a reference to an object whose type is
+class <code display="inline">CParticle</code> so the method of that class is called.
+</item>
+        </list>
+        <para id="id158041"><emphasis effect="bold">Exercise</emphasis> Add an assignment of <code display="inline">c</code> to <code display="inline">b</code> and call
+<code display="inline">b.newPosition(10)</code>. What is the value now of <code display="inline">b.position</code>?</para>
+      </section>
+      <section id="uid25">
+        <title>Downcasting</title>
+        <para id="id158082"><emphasis effect="bold">Concept</emphasis> A variable of the type of a class can reference an object
+of the type of a <emphasis effect="italics">subclass</emphasis>, but this variable cannot be used to access fields
+declared in the subclass.
+Nevertheless, the object “remembers” its type, even if it is assigned
+to a variable of the type of its superclass, and the type can be “recovered”
+by casting to a variable of the type of the subclass.
+This is called
+<emphasis effect="italics">downcasting</emphasis> because the cast is “down” the derivation hierarchy.</para>
+        <para id="id158107">
+          <emphasis effect="bold">Program: Inheritance04.java</emphasis>
+        </para>
+        <code id="id158114" display="block">// Learning Object Inheritance04
+//    downcasting
+class Particle {
+    int position;
+ 
+    Particle(int p) {
+        position = p;
+    }
+ 
+    void newPosition(int delta) {
+        position = position + delta;
+    }
+}
+ 
+class AParticle extends Particle {
+    double spin;
+ 
+    AParticle(int p, double s) {
+        super(p);
+        spin = s;
+    }
+ 
+    void newPosition(int delta) {
+    if (spin &lt; delta)
+            position = position + delta;
+    }
+}
+ 
+class BParticle extends Particle {
+    int charge;
+ 
+    BParticle(int p, int c) {
+        super(p);
+        charge = c;
+    }
+}
+ 
+class CParticle extends BParticle {
+    boolean strange;
+ 
+    CParticle(int p, int c, boolean s) {
+        super(p, c);
+        strange = s;
+    }
+ 
+    void newPosition(int delta) {
+        if (strange)
+            position = position * charge;
+    }
+}
+ 
+class Inheritance04 {
+    public static void main(/*String[] args*/) {
+        Particle  p = new Particle(10);
+        AParticle a = new AParticle(20, 2.0);
+ 
+        int pPosition = p.position;
+        p = a;
+        int paPosition = p.position;
+        a = (AParticle) p;
+        int aPosition = a.position;
+        double sSpin = a.spin;
+    }
+}
+</code>
+        <para id="id158689">In this program, we take an object of the type of the
+subclass <code display="inline">AParticle</code> and assign its reference to the variable
+<code display="inline">p</code> of the type of the superclass <code display="inline">Particle</code>. The object's
+actual type is recovered by downcasting from <code display="inline">p</code> to <code display="inline">a</code>.</para>
+        <list id="id158721" display="block" list-type="bulleted">
+          <item id="uid26">The objects are created.
+</item>
+          <item id="uid27">The value of <code display="inline">p.position</code> is stored in a variable.
+</item>
+          <item id="uid28">The reference in the variable <code display="inline">a</code> is assigned to <code display="inline">p</code>.
+Note that the arrows from the representation of both variables point to
+the same object of type <code display="inline">AParticle</code>, and that the other object
+is garbage.
+</item>
+          <item id="uid29">When the value of <code display="inline">p.position</code> is accessed, it refers to the value that
+is in <code display="inline">a.position</code>.
+</item>
+          <item id="uid30">The reference in <code display="inline">p</code> can be cast to the type <code display="inline">AParticle</code>
+and assigned to <code display="inline">a</code>. Although <code display="inline">p</code> is declared to hold references to objects of
+type <code display="inline">Particle</code>, the object was really of the subclass <code display="inline">AParticle</code>.
+</item>
+          <item id="uid31">Both the fields <code display="inline">position</code> and <code display="inline">spin</code> can be accessed
+through <code display="inline">a</code>.
+</item>
+        </list>
+        <para id="id158884"><emphasis effect="bold">Exercise</emphasis> What happens if you try to access <code display="inline">p.spin</code> after
+<code display="inline">a</code> has been assigned to <code display="inline">p</code>?</para>
+        <para id="id158909"><emphasis effect="bold">Exercise</emphasis> Add the statement <code display="inline">BParticle b = (BParticle) p</code>
+after the assignment of <code display="inline">a</code> to <code display="inline">p</code>. Does the program compile
+successfully? Does it run successfully? Explain the results.</para>
+      </section>
+      <section id="uid32">
+        <title>Heterogeneous data structures</title>
+        <para id="id158944"><emphasis effect="bold">Concept</emphasis>
+A heterogeneous data structure is one that can hold elements of different types.
+A data structure whose elements are of the type of a class can hold
+references to objects of any subclass of that class.</para>
+        <para id="id158954">
+          <emphasis effect="bold">Program: Inheritance05.java</emphasis>
+        </para>
+        <code id="id158961" display="block">// Learning Object Inheritance05
+//    heterogeneous data structures
+class Particle {
+    int position;
+ 
+    Particle(int p) {
+        position = p;
+    }
+ 
+    void newPosition(int delta) {
+        position = position + delta;
+    }
+}
+ 
+class AParticle extends Particle {
+    double spin;
+ 
+    AParticle(int p, double s) {
+        super(p);
+        spin = s;
+    }
+ 
+    void newPosition(int delta) {
+    if (spin &lt; delta)
+            position = position + delta;
+    }
+}
+ 
+class BParticle extends Particle {
+    int charge;
+ 
+    BParticle(int p, int c) {
+        super(p);
+        charge = c;
+    }
+}
+ 
+class CParticle extends BParticle {
+    boolean strange;
+ 
+    CParticle(int p, int c, boolean s) {
+        super(p, c);
+        strange = s;
+    }
+ 
+    void newPosition(int delta) {
+        if (strange)
+            position = position * charge;
+    }
+}
+ 
+class Inheritance05 {
+    public static void main(/*String[] args*/) {
+        Particle[] p = new Particle[4];
+        p[0] = new Particle(10);
+        p[1] = new AParticle(20, 2.0);
+        p[2] = new BParticle(30, 3);
+        p[3] = new CParticle(40, 4, true);
+        int i = 0;
+        p[i++].newPosition(10);
+        p[i++].newPosition(10);
+        p[i++].newPosition(10);
+        p[i].newPosition(10);
+    }
+}
+</code>
+        <para id="id159545">An array whose elements are of class <code display="inline">Particle</code>
+can store references to objects of any of its subclasses.</para>
+        <list id="id159554" display="block" list-type="bulleted">
+          <item id="uid33">The objects are created and references to them assigned to elements
+of the elements of the array <code display="inline">p</code>.
+</item>
+          <item id="uid34">Method <code display="inline">newPosition</code> is invoked for the object referenced
+by each element of the array <code display="inline">p</code>.
+Check that the fields accessed are those of the object referenced by the
+array element and that the calls are dynamically dispatched to the method
+appropriate for the type of the object.
+</item>
+        </list>
+        <para id="id159602"><emphasis effect="bold">Exercise</emphasis> Every object in Java is a subclass of the class
+<code display="inline">Object</code>. Modify the program so that the variable <code display="inline">p</code> is of
+type array of <code display="inline">Object</code>.</para>
+      </section>
+      <section id="uid35">
+        <title>Abstract classes</title>
+        <para id="id159637"><emphasis effect="bold">Concept</emphasis> Very often the “root” of a set of derived types has no
+meaning itself, in the sense that objects of that type would never be
+declared. For example, in a realistic simulation program, the would be no
+real particles that are just “particles,” only particles with names like
+<emphasis effect="italics">α</emphasis>-particles and <emphasis effect="italics">β</emphasis>-particles.
+An <emphasis effect="italics">abstract</emphasis> class can be declared which serves only as a root from
+which to derive a hierarchy of subclasses.
+It is not legal to declare <emphasis effect="italics">objects</emphasis> of an abstract class,
+although <emphasis effect="italics">variables</emphasis> of its type may be declared and used to
+reference objects of any type within the hierarchy. A method may also be
+declared abstract; this indicates that it <emphasis effect="italics">must</emphasis> be overridden in
+subclasses.</para>
+        <para id="id159694">
+          <emphasis effect="bold">Program: Inheritance06.java</emphasis>
+        </para>
+        <code id="id159701" display="block">// Learning Object Inheritance06
+//    abstract classes
+abstract class Particle {
+    int position;
+ 
+    Particle(int p) {
+        position = p;
+    }
+    abstract void newPosition(int delta);
+}
+ 
+class AParticle extends Particle {
+    double spin;
+ 
+    AParticle(int p, double s) {
+        super(p);
+        spin = s;
+    }
+ 
+    void newPosition(int delta) {
+    if (spin &lt; delta)
+            position = position + delta;
+    }
+}
+ 
+class BParticle extends Particle {
+    int charge;
+ 
+    BParticle(int p, int c) {
+        super(p);
+        charge = c;
+    }
+}
+ 
+class CParticle extends BParticle {
+    boolean strange;
+ 
+    CParticle(int p, int c, boolean s) {
+        super(p, c);
+        strange = s;
+    }
+ 
+    void newPosition(int delta) {
+        if (strange)
+            position = position * charge;
+    }
+}
+ 
+class Inheritance06 {
+    public static void main(/*String[] args*/) {
+        Particle[] p = new Particle[3];
+        p[0] = new AParticle(20, 2.0);
+        p[1] = new BParticle(30, 3);
+        p[2] = new CParticle(40, 4, true);
+        int i = 0;
+        p[i++].newPosition(10);
+        p[i++].newPosition(10);
+        p[i].newPosition(10);
+    }
+}
+</code>
+        <para id="id160240">The follow program declares <code display="inline">Particle</code> to
+be <code display="inline">abstract</code> and no objects of that class can be declared. The
+method <code display="inline">newPosition</code> is also declared abstrct because it doesn't
+make sense to have a particle that you can't move.</para>
+        <para id="id160262"><emphasis effect="bold">Exercise</emphasis> The program does not compile successfully. Why? (Note that
+in Jeliot, the problem is only found at when animating the program.)
+Modify the program so that it compiles and executes.</para>
+        <list id="id160271" display="block" list-type="bulleted">
+          <item id="uid36">The objects are created and references to them assigned to
+elements of the array.
+</item>
+          <item id="uid37">Method <code display="inline">newPosition</code> is invoked for the object referenced
+by each element of the array <code display="inline">p</code>.
+Check that the fields accessed are those of the object referenced by the
+array element and that the calls are dynamically dispatched to the method
+appropriate for the type of the object.
+</item>
+        </list>
+        <para id="id160314"><emphasis effect="bold">Exercise</emphasis> It is possible to declare a nonabsract method in an
+abstract class. Give an example for this program, and explain why it is a
+reasonable thing to do.</para>
+      </section>
+      <section id="uid38">
+        <title>Equals</title>
+        <para id="id160333"><emphasis effect="bold">Concept</emphasis> There are two concepts of equality in Java: the <emphasis effect="italics">operator</emphasis><code display="inline">==</code> compares primitives types and references, while the <emphasis effect="italics">method</emphasis><code display="inline">equals</code> compares objects. The default implementation of
+<code display="inline">equals</code> is like <code display="inline">==</code>, but it can be overridden in any class.</para>
+        <para id="id160375">
+          <emphasis effect="bold">Program: Inheritance07A.java</emphasis>
+        </para>
+        <code id="id160382" display="block">// Learning Object Inheritance07A
+//    equality (== vs. equals)
+class Particle {
+    int position;
+ 
+    Particle(int p) {
+        position = p;
+    }
+ 
+    void newPosition(int delta) {
+        position = position + delta;
+    }
+}
+ 
+class AParticle extends Particle {
+    double spin;
+ 
+    AParticle(int p, double s) {
+        super(p);
+        spin = s;
+    }
+ 
+    void newPosition(int delta) {
+    if (spin &lt; delta)
+            position = position + delta;
+    }
+}
+ 
+class Inheritance07A {
+    public static void main(/*String[] args*/) {
+        AParticle a1 = new AParticle(20, 2.0);
+        AParticle a2 = a1;
+        AParticle a3 = new AParticle(20, 2.0);
+        boolean eqop12 = a1 == a2;
+        boolean eqop13 = a1 == a3;
+        boolean eqmethod = a1.equals(a3);
+    }
+}
+</code>
+        <list id="id160726" display="block" list-type="bulleted">
+          <item id="uid39">Object <code display="inline">a1</code> of type <code display="inline">AParticle</code> is created.
+</item>
+          <item id="uid40"><code display="inline">a1</code> is assigned to <code display="inline">a2</code> using <code display="inline">==</code>.
+</item>
+          <item id="uid41">Object <code display="inline">a3</code> of type <code display="inline">AParticle</code> is created with the
+same values for its fields as the object referenced by <code display="inline">a1</code>.
+</item>
+          <item id="uid42">Evaluating <code display="inline">a1==a2</code> returns <emphasis effect="italics">true</emphasis> because they both reference the same object.
+</item>
+          <item id="uid43">Evaluating <code display="inline">a1==a3</code> returns <emphasis effect="italics">false</emphasis> because they reference different objects.
+</item>
+          <item id="uid44">Strangely enough, evaluating <code display="inline">a1.equals(a3)</code> returns <emphasis effect="italics">false</emphasis>.
+Although their fields are equal, the default implementation of <code display="inline">equals</code> is
+the same as <code display="inline">==</code>!
+</item>
+        </list>
+        <para id="id160893"><emphasis effect="bold">Exercise</emphasis> Add the follow method to <code display="inline">AParticle</code> and run the
+program again. What happens now?</para>
+        <code id="id160907" display="block">public boolean equals(AParticle a) {
+  return this.position == a.position &amp;&amp; this.spin == a.spin;
+}
+</code>
+        <para id="id160935">
+          <emphasis effect="bold">Program: Inheritance07B.java</emphasis>
+        </para>
+        <code id="id160942" display="block">// Learning Object Inheritance07B
+//    equality (overloading equals)
+class Particle {
+    int position;
+ 
+    Particle(int p) {
+        position = p;
+    }
+ 
+    void newPosition(int delta) {
+        position = position + delta;
+    }
+}
+ 
+class BParticle extends Particle {
+    int charge;
+ 
+    BParticle(int p, int c) {
+        super(p);
+        charge = c;
+    }
+ 
+    public boolean equals(BParticle b) {
+        return  this.position == b.position &amp;&amp;
+                this.charge == b.charge;
+    }
+}
+ 
+class CParticle extends BParticle {
+    boolean strange;
+ 
+    CParticle(int p, int c, boolean s) {
+        super(p, c);
+        strange = s;
+    }
+ 
+    void newPosition(int delta) {
+        if (strange)
+            position = position * charge;
+    }
+ 
+    public boolean equals(CParticle c) {
+        return    this.position == c.position &amp;&amp;
+                this.charge == c.charge &amp;&amp;
+                  this.strange == c.strange;
+    }
+}
+ 
+class Inheritance07B {
+    public static void main(/*String[] args*/) {
+        BParticle b1 = new BParticle(20, 2);
+        BParticle b2 = new BParticle(20, 2);
+        CParticle c1 = new CParticle(20, 2, false);
+        CParticle c2 = new CParticle(20, 2, true);
+        boolean eqb1b2 = b1.equals(b2);
+        boolean eqc1c2 = c1.equals(c2);
+        boolean eqb1c1 = b1.equals(c1);
+        boolean eqc1b1 = c1.equals(b1);
+    }
+}
+</code>
+        <para id="id161483">Let us try to override the method <code display="inline">equals</code> in classes <code display="inline">BParticle</code>
+and <code display="inline">CParticle</code>; the method returns true if the all fields of the
+two objects are equal.</para>
+        <list id="id161504" display="block" list-type="bulleted">
+          <item id="uid45">Four objects are created: two equal objects <code display="inline">b1</code> and <code display="inline">b2</code>
+of type <code display="inline">BParticle</code> and two unequal objects <code display="inline">c1</code> and <code display="inline">c2</code>
+of type <code display="inline">CParticle</code>.
+</item>
+          <item id="uid46">As expected, <code display="inline">b1.equals(b2)</code> returns <emphasis effect="italics">true</emphasis> and <code display="inline">c1.equals(c2)</code> returns <emphasis effect="italics">false</emphasis>.
+</item>
+          <item id="uid47"><code display="inline">b1.equals(c1)</code> returns <emphasis effect="italics">true</emphasis>: since <code display="inline">CParticle</code>
+is a subclass of <code display="inline">BParticle</code>, the variable <code display="inline">c1</code> is acceptable
+as a parameter to the method <code display="inline">equals</code> declared in <code display="inline">BParticle</code>.
+<code display="inline">c1</code><emphasis effect="italics">is</emphasis> equal to <code display="inline">b1</code>, because we are only comparing
+the first two fields inherited from <code display="inline">BParticle</code> and these are equal.
+</item>
+        </list>
+        <para id="id161662"><emphasis effect="bold">Exercise</emphasis> Explain what happens if you try to evaluate <code display="inline">c1.equals(b1)</code>.</para>
+        <para id="id161676">
+          <emphasis effect="bold">Program: Inheritance07C.java</emphasis>
+        </para>
+        <code id="id161683" display="block">// Learning Object Inheritance07C
+//    equality (robust overriding)
+class Particle {
+    int position;
+ 
+    Particle(int p) {
+        position = p;
+    }
+ 
+    void newPosition(int delta) {
+        position = position + delta;
+    }
+}
+ 
+class BParticle extends Particle {
+    int charge;
+ 
+    BParticle(int p, int c) {
+        super(p);
+        charge = c;
+    }
+}
+ 
+class CParticle extends BParticle {
+    boolean strange;
+ 
+    CParticle(int p, int c, boolean s) {
+        super(p, c);
+        strange = s;
+    }
+ 
+    void newPosition(int delta) {
+        if (strange)
+            position = position * charge;
+    }
+ 
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj instanceof CParticle)) return false;
+        CParticle c = (CParticle) obj;
+        return this.position == c.position &amp;&amp; this.charge == c.charge &amp;&amp;
+               this.strange == c.strange;
+    }
+}
+ 
+class Inheritance07C {
+    public static void main(/*String[] args*/) {
+        BParticle b1 = new BParticle(20, 2);
+        CParticle c1 = new CParticle(20, 2, false);
+        CParticle c2 = new CParticle(20, 2, true);
+        CParticle c3 = new CParticle(20, 2, false);
+        boolean eqc1null = c1.equals(null);
+        boolean eqc1b1 = c1.equals(b1);
+        boolean eqc1c2 = c1.equals(c2);
+        boolean eqc1c3 = c1.equals(c3);
+    }
+}
+</code>
+        <para id="id162195">It would be unusual for two objects to be considered equal if they
+are of different types, even if one type is a subclass of another.
+In fact,
+<code display="inline">public boolean equals(CParticle c)</code>
+does not override the method <code display="inline">equals</code> in <code display="inline">BParticle</code>,
+because an overriding method must have the <emphasis effect="italics">same signature</emphasis> as the overridden
+method.</para>
+        <para id="id162223">The method <code display="inline">equals</code> is declared in the root class <code display="inline">Object</code> as:
+<code display="inline">public boolean equals(Object obj)</code>
+and this is the method that must be overridden.
+This program shows the correct technique:</para>
+        <list id="id162245" display="block" list-type="bulleted">
+          <item id="uid48">Since the parameter can now be any object, a check is first made that
+the parameter is not <code display="inline">null</code>.
+</item>
+          <item id="uid49">Similarly, a check is made that the parameter is of the same
+type as this object.
+</item>
+          <item id="uid50">Now that we know that the parameter is actually of this type,
+it can be cast from <code display="inline">Object</code> to the type.
+</item>
+          <item id="uid51">Only then is class-specific code performed—usually a field-by-field comparison.
+</item>
+        </list>
+        <para id="id162312">Trace the execution of the program:</para>
+        <list id="id162315" display="block" list-type="bulleted">
+          <item id="uid52">Four objects are created: one object <code display="inline">b1</code> of type <code display="inline">BParticle</code>
+and three objects <code display="inline">c1</code>, <code display="inline">c2</code> and <code display="inline">c3</code> of type <code display="inline">CParticle</code>.
+</item>
+          <item id="uid53">Clearly, comparing <code display="inline">c1</code> to <code display="inline">null</code> or <code display="inline">b1</code> returns <emphasis effect="italics">false</emphasis>.
+</item>
+          <item id="uid54">Field-by-field comparisons are used if the parameter is of type <code display="inline">CParticle</code>: <code display="inline">c1.equals(c2)</code> returns <emphasis effect="italics">false</emphasis> and <code display="inline">c1.equals(c3)</code> returns <emphasis effect="italics">true</emphasis>.
+</item>
+        </list>
+        <para id="id162440"><emphasis effect="bold">Exercise</emphasis> Move the declaration of <code display="inline">equals</code> to class
+<code display="inline">BParticle</code>, changing the code as needed. What now is the value of
+<code display="inline">c1.equals(b1)</code>? Explain.</para>
+      </section>
+      <section id="uid55">
+        <title>Clone</title>
+        <para id="id162476"><emphasis effect="bold">Concept</emphasis> Assigning a variable containing a reference to another
+of the same type merely copies the
+reference so that two fields refer to the same object. The method
+<code display="inline">clone</code> is used to copy the content of an object into a new one.
+<code display="inline">clone</code> is defined in class <code display="inline">Object</code> and can be
+overridden in any class definition.</para>
+        <para id="id162504">
+          <emphasis effect="bold">Program: Inheritance08.java</emphasis>
+        </para>
+        <code id="id162510" display="block">// Learning Object Inheritance08
+//    clone
+class Particle implements Cloneable {
+    int position;
+ 
+    Particle(int p) {
+        position = p;
+    }
+ 
+    void newPosition(int delta) {
+        position = position + delta;
+    }
+ 
+    protected Object clone() {
+        try {
+            Particle p = (Particle) super.clone();
+            p.newPosition(10);
+            return p;
+        }
+        catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            throw new Error();
+        }
+    }
+}
+ 
+class Inheritance08 {
+    public static void main(String[] args) {
+        Particle p1 = new Particle(20);
+        Particle p2 = p1;
+        p1.newPosition(10);
+        System.out.println(p1.position);
+        System.out.println(p2.position);
+ 
+        Particle p3 = (Particle) p1.clone();
+        System.out.println(p1.position);
+        System.out.println(p3.position);
+ 
+        p3.newPosition(10);
+        System.out.println(p1.position);
+        System.out.println(p3.position);
+    }
+}
+</code>
+        <para id="id162896"><code display="inline">clone</code> is overridden in class <code display="inline">Particle</code>.
+The class must implement the interface <code display="inline">Cloneable</code>, the
+method of the superclass should be called, and we have to take into
+account that the method might raise an exception. The method returns
+the object returned by superclass method after calling <code display="inline">newPosition</code>.</para>
+        <list id="id162923" display="block" list-type="bulleted">
+          <item id="uid56">An object of class <code display="inline">Particle</code> is allocated and its reference
+assigned to the field <code display="inline">p1</code>.
+</item>
+          <item id="uid57">An assignment statement copies this reference to the field <code display="inline">p2</code>.
+Check that they have the same value.
+</item>
+          <item id="uid58">The method <code display="inline">newPosition</code> is called on <code display="inline">p1</code>, but the
+value of <code display="inline">p2.position</code> is also changed, showing that the two fields
+point to the same object.
+</item>
+          <item id="uid59">An object of class <code display="inline">Particle</code> is obtained by calling <code display="inline">p1.clone()</code> and its reference assigned to the field <code display="inline">p3</code>. Since <code display="inline">clone</code> returns a value of type
+<code display="inline">Object</code>, it must be cast to type <code display="inline">Particle</code> before the assignment.
+Check that the objects referenced by <code display="inline">p1</code> and <code display="inline">p3</code> have different values.
+</item>
+          <item id="uid60">Calling <code display="inline">p3.newPosition</code> changes only the field in the object
+referenced by <code display="inline">p3</code> and not the separate object referenced by <code display="inline">p1</code>.
+</item>
+        </list>
+        <para id="id163086"><emphasis effect="bold">Exercise</emphasis> The method <code display="inline">clone</code> can perform arbitrary
+computation. Modify the program so that new objects are initialized with
+the absolute value of the field of the object that is being cloned.</para>
+      </section>
+      <section id="uid61">
+        <title>Overloading vs. overriding</title>
+        <para id="id163111"><emphasis effect="bold">Concept</emphasis><emphasis effect="italics">Overloading</emphasis> is the use of the same method name with a
+<emphasis effect="italics">different</emphasis> parameter signature. <emphasis effect="italics">Overriding</emphasis> is the use in a subclass
+of the same method name with the <emphasis effect="italics">same</emphasis> parameter signature as a method
+of the superclass.</para>
+        <para id="id163143">
+          <emphasis effect="bold">Program: Inheritance09.java</emphasis>
+        </para>
+        <code id="id163150" display="block">// Learning Object Inheritance09
+//    overloading vs. overriding
+class Particle {
+    int position;
+ 
+    Particle(int p) {
+        position = p;
+    }
+ 
+    void newPosition(int delta) {
+        position = position + delta;
+    }
+}
+ 
+class AParticle extends Particle {
+    double spin;
+ 
+    AParticle(int p, double s) {
+        super(p);
+        spin = s;
+    }
+ 
+    void newPosition(int delta) {
+    if (spin &lt; delta)
+            position = position + delta;
+    }
+ 
+    void newPosition(double delta) {
+    if (position &lt; delta)
+            spin = spin + delta;
+    }
+}
+ 
+class Inheritance09 {
+    public static void main(/*String[] args*/) {
+        Particle  p = new Particle(10);
+        AParticle a1 = new AParticle(20, -1.0);
+        AParticle a2 = new AParticle(20, -1.0);
+ 
+        p.newPosition(10);
+        int pPosition = p.position;
+        a1.newPosition(10);
+        int a1Position = a1.position;
+        a2.newPosition(10.0);
+        int a2Position = a2.position;
+    }
+}
+</code>
+        <para id="id163580">The method <code display="inline">newPosition(int delta)</code> is declared in <code display="inline">Particle</code> and
+<emphasis effect="italics">overridden</emphasis> in <code display="inline">AParticle</code>. It is also <emphasis effect="italics">overloaded</emphasis> by a method
+with the same name takes a parameter of type <code display="inline">double</code>.</para>
+        <list id="id163618" display="block" list-type="bulleted">
+          <item id="uid62">After allocating three objects <code display="inline">p</code>, <code display="inline">a1</code> and <code display="inline">a2</code>, <code display="inline">newPosition</code> is called on each one.
+</item>
+          <item id="uid63"><code display="inline">p.newPosition</code> calls the method declared in class
+<code display="inline">Particle</code>.
+</item>
+          <item id="uid64"><code display="inline">a1.newPosition</code> calls the method declared
+in class <code display="inline">AParticle</code> that overrides the method in
+<code display="inline">Particle</code>.
+</item>
+          <item id="uid65"><code display="inline">a2.newPosition</code> calls the overloaded method
+because the actual parameter is of type <code display="inline">double</code>.
+</item>
+        </list>
+        <para id="id163729"><emphasis effect="bold">Exercise</emphasis> At the end of the program add an assignment <code display="inline">p =
+a1</code>. Add the method invocations <code display="inline">p.newPosition(10)</code> and
+<code display="inline">p.newPosition(10.0)</code> in the main method. Explain what happens.
+</para>
+      </section>
+    </section>
+  </content>
+</document>

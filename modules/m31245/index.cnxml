@@ -1,0 +1,573 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Learning Objects for Arrays in Java</title>
+  <metadata>
+  <md:content-id>m31245</md:content-id><md:title>Learning Objects for Arrays in Java</md:title>
+  <md:abstract>These learning objects explain arrays in the Java program language. Arrays are a data structure for efficiently accessing a large number of components of the same type.</md:abstract>
+  <md:uuid>72cbbbde-b432-41dc-9aeb-ebc66fe3633e</md:uuid>
+</metadata>
+<featured-links>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit below.
+       Changes to the links section in the source will not be saved. -->
+    <link-group type="prerequisite">
+      <link url="http://www.cs.joensuu.fi/jeliot/" strength="3">Jeliot Program Animation System</link>
+    </link-group>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit above.
+       Changes to the links section in the source will not be saved. -->
+</featured-links>
+<content>
+    <section id="cid1">
+      <title>Learning Objects for Arrays</title>
+      <para id="id64853"><emphasis effect="bold">Concept</emphasis> An array is a sequence of elements of the same type;
+the type of the elements can be a primitive types such as <code display="inline">int</code>,
+or a predefined or user-defined class type. To access an element of an array, an index is given; this may be any expression of type
+<code display="inline">int</code>, including an integer literal or a variable.</para>
+      <para id="eip-874">The source code of these learning objects can be found in
+<link resource="array.zip">array.zip</link>.</para><table id="id64873" summary="">
+        <tgroup cols="4">
+          <tbody>
+            <row>
+              <entry>LO</entry>
+              <entry>Topic</entry>
+              <entry>Java Files (.java)</entry>
+              <entry>Prerequisites</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid1">"Array objects"</link>
+              </entry>
+              <entry>Array objects</entry>
+              <entry>Array01A, B</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid10">"Array initializers"</link>
+              </entry>
+              <entry>Array initializers</entry>
+              <entry>Array02</entry>
+              <entry>1</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid14">"Passing arrays as parameters"</link>
+              </entry>
+              <entry>Passing arrays as parameters</entry>
+              <entry>Array03</entry>
+              <entry>2</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid19">"Returning an array from a method"</link>
+              </entry>
+              <entry>Returning an array from a method</entry>
+              <entry>Array04</entry>
+              <entry>2</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid26">"Array assignment can create garbage"</link>
+              </entry>
+              <entry>Array assignment can create garbage</entry>
+              <entry>Array05</entry>
+              <entry>4</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid33">"Two-dimensional arrays"</link>
+              </entry>
+              <entry>Two-dimensional arrays</entry>
+              <entry>Array06</entry>
+              <entry>3</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid39">"Arrays of arrays"</link>
+              </entry>
+              <entry>Arrays of arrays</entry>
+              <entry>Array07</entry>
+              <entry>6</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid44">"Ragged Arrays"</link>
+              </entry>
+              <entry>Ragged arrays</entry>
+              <entry>Array08</entry>
+              <entry>6</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid49">"Arrays of objects"</link>
+              </entry>
+              <entry>Arrays of objects</entry>
+              <entry>Array09</entry>
+              <entry>3</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <!--empty paragraphs get left behind.-->
+      <para id="id65238">The example used in LO 1 through LO 4 is to fill an array
+with a sequence of fibonacci numbers (0,1,1,2,3,5,8). The programs for
+LO 5 through LO 8 concern matrices.
+The program for LO 9 is explained there.</para>
+      <section id="uid1">
+        <title>Array objects</title>
+        <para id="id65251"><emphasis effect="bold">Concept</emphasis> An array is created in three steps: first a variable of
+an array type is declared; then the array is allocated; finally, the
+elements of the array are given values. The syntax for accessing an array
+<code display="inline">a</code> is <code display="inline">a[i]</code>, and the field <code display="inline">a.length</code> gives the
+length of the array, so that if we modify the program by changing the size
+of the array the rest of the program need not change.</para>
+        <para id="id65277">
+          <emphasis effect="bold">Program: Array01A.java</emphasis>
+        </para>
+        <code id="id65284" display="block">// Learning Object Array01A
+//    array objects
+public class Array01A {
+    public static void main(/*String[] args*/) {
+        int[] fib;
+        fib = new int[7];
+        fib[0] = 0;
+        fib[1] = 1;
+        for (int i = 2; i &lt; fib.length; i++)
+            fib[i] = fib[i-1] + fib[i-2];
+    }
+}
+</code>
+        <para id="id65393">The program creates an array in the three steps described above.</para>
+        <list id="id65397" display="block" list-type="bulleted">
+          <item id="uid2">Initially, the variable <code display="inline">fib</code> of type integer array (denoted
+<code display="inline">int[]</code>) is allocated and contains the null value.
+</item>
+          <item id="uid3"><code display="inline">new fib[7]</code> creates an array object with its seven fields having the default
+integer value zero; then the reference to the object is returned and
+stored in the variable <code display="inline">fib</code>.
+</item>
+          <item id="uid4">The length field of the array is displayed above the cells for the elements.
+</item>
+          <item id="uid5">A <code display="inline">for</code> loop is used to assign values to each element of the
+array.
+</item>
+          <item id="uid6">The thin white lines show the constants and expressions that are used
+as indices into the array.
+</item>
+          <item id="uid7"><emphasis effect="italics">Automatic dereferencing</emphasis>:
+Although expressions like <code display="inline">fib[i-2]</code> seem to indicate that
+<code display="inline">fib</code> is being indexed, <code display="inline">fib</code> contains a reference to an array;
+an implicit operation of dereferencing is carried out to obtain the
+array itself from the reference and the index <code display="inline">[i-2]</code> is then
+applied to that array.
+</item>
+        </list>
+        <para id="id65525"><emphasis effect="bold">Concept</emphasis> It is possible to combine the first two steps in creating an array:
+declaring the array field and allocating the array object.</para>
+        <para id="id65533">
+          <emphasis effect="bold">Program: Array01B.java</emphasis>
+        </para>
+        <code id="id65540" display="block">// Learning Object Array01B
+//    array objects
+public class Array01B {
+    private final static int SIZE = 7;
+    public static void main(/*String[] args*/) {
+        int[] fib = new int[SIZE];
+        fib[0] = 0;
+        fib[1] = 1;
+        for (int i = 2; i &lt; fib.length; i++)
+            fib[i] = fib[i-1] + fib[i-2];
+    }
+}
+</code>
+        <para id="id65651">This program combines the declaration of the
+array field with its allocator. We have used the constant <code display="inline">SIZE</code> to
+specify the size of the array; this makes it easier to modify
+the program; nevertheless, <code display="inline">fib.length</code> is still used in the
+executable statements.</para>
+        <list id="id65667" display="block" list-type="bulleted">
+          <item id="uid8">Initially, the static variable <code display="inline">SIZE</code> is created in the constant
+area and given its value.
+</item>
+          <item id="uid9">The execution of the program is as before.
+</item>
+        </list>
+        <para id="id65700"><emphasis effect="bold">Exercise</emphasis> Modify the program so that the fibonacci sequence appears in
+reverse order.</para>
+      </section>
+      <section id="uid10">
+        <title>Array initializers</title>
+        <para id="id65718"><emphasis effect="bold">Concept</emphasis> An array object can be created implicitly by giving a list of values
+within braces.</para>
+        <para id="id65726">
+          <emphasis effect="bold">Program: Array02.java</emphasis>
+        </para>
+        <code id="id65732" display="block">// Learning Object Array02
+//   array initializers
+public class Array02 {
+    public static void main(/*String[] args*/) {
+        int[] fib = {0, 1, 1, 2, 3, 5, 8};
+    }
+}
+</code>
+        <para id="id65794">The program initializes an array with values of the fibonacci sequence.</para>
+        <list id="id65798" display="block" list-type="bulleted">
+          <item id="uid11">Initially, the variable <code display="inline">fib</code> of type integer array (denoted <code display="inline">int[]</code>) is allocated.
+</item>
+          <item id="uid12"><emphasis effect="italics">As part of the same statement</emphasis>, the array object is created and
+its seven fields contain the values from the initializer.
+</item>
+          <item id="uid13">Only then is the reference to the object returned and stored in the variable <code display="inline">fib</code>.
+</item>
+        </list>
+        <para id="id65858"><emphasis effect="bold">Exercise</emphasis> Can an element of an array initializer be the value of
+an expression containing variables previously declared? Modify this program
+accordingly and try to compile and run it. Explain what happens.</para>
+      </section>
+      <section id="uid14">
+        <title>Passing arrays as parameters</title>
+        <para id="id65876"><emphasis effect="bold">Concept</emphasis> An array is an object. Since the array variable itself
+contains a reference, it can be passed as an actual paramter to a method
+and the reference is used to initialize the formal parameter.</para>
+        <para id="id65885">
+          <emphasis effect="bold">Program: Array03.java</emphasis>
+        </para>
+        <code id="id65891" display="block">// Learning Object Array03
+//    passing arrays as parameters
+public class Array03 {
+    static void reverse(int[] a) {
+        int temp,j;
+        for (int i = 0; i &lt; a.length / 2; i++) {
+            j = a.length-i-1;
+            temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    }
+ 
+    public static void main(/*String[] args*/) {
+        int[] fib = {0, 1, 1, 2, 3, 5, 8};
+        reverse(fib);
+    }
+}
+</code>
+        <para id="id66060">This program passes an array as a parameter to a method
+that reverses the elements of the array.</para>
+        <list id="id66064" display="block" list-type="bulleted">
+          <item id="uid15">Initially, the variable <code display="inline">fib</code> of type integer array is
+allocated. As part of the same statement, the array object is created with
+its seven fields having the values in the initializer; the reference to
+the object is returned and stored in the variable <code display="inline">fib</code>.
+</item>
+          <item id="uid16">The array (that is, a <emphasis effect="italics">reference</emphasis> to the array) is passed as a parameter to the method <code display="inline">reverse</code>. There are now two arrows pointing to the array: the reference from the <code display="inline">main</code> method and the reference from the parameter <code display="inline">a</code> of the method <code display="inline">reverse</code>.
+</item>
+          <item id="uid17">The method scans the first half of the array, exchanging each element with the corresponding one in the second half. Variables <code display="inline">i</code> and <code display="inline">j</code> contain the indices of the two elements that are exchanged.
+</item>
+          <item id="uid18">Upon return from the method, the variable <code display="inline">fib</code> still
+contains a reference to the array, which has had its sequence of values
+reversed.
+</item>
+        </list>
+        <para id="id66178"><emphasis effect="bold">Exercise</emphasis> Instead of declaring the variable <code display="inline">j</code> outside the for-loop,
+declare it just inside the for-loop as follows:</para>
+        <code id="id66192" display="block">int j = a.length-i-1;
+</code>
+        <para id="id66200">Trace the execution and explain what happens.</para>
+      </section>
+      <section id="uid19">
+        <title>Returning an array from a method</title>
+        <para id="id66214"><emphasis effect="bold">Concept</emphasis> An array can be allocated within a method. Although the variable
+containing the reference to the array is local to the method, the array
+itself is global and the reference can be returned from the method.</para>
+        <para id="id66224">
+          <emphasis effect="bold">Program: Array04.java</emphasis>
+        </para>
+        <code id="id66231" display="block">// Learning Object Array04
+//    returning an array from a method
+public class Array04 {
+    static int[] reverse(int[] a) {
+        int[] b = new int[a.length];
+        int j;
+        for (int i = 0; i &lt; a.length / 2; i++) {
+            j = a.length-i-1;
+            b[j] = a[i];
+            b[i] = a[j];
+        }
+        return b;
+    }
+ 
+    public static void main(/*String[] args*/) {
+        int[] fib = {0, 1, 1, 2, 3, 5, 8};
+        int[] reversedFib = reverse(fib);
+    }
+}
+</code>
+        <para id="id66410">This program passes an array as a parameter to a method that reverses the elements of the array. The array is reversed into a new array <code display="inline">b</code> that is allocated in the method <code display="inline">reverse</code>. It is then returned to the main method and assigned to <code display="inline">reversedFib</code>, a different variable of the same array type <code display="inline">int[]</code>.</para>
+        <list id="id64352" display="block" list-type="bulleted">
+          <item id="uid20">Initially, the variable <code display="inline">fib</code> of type integer array is
+allocated. As part of the same statement, the array object is created with
+its seven fields having the values in the initializer; the reference to
+the object is returned and stored in the variable <code display="inline">fib</code>.
+</item>
+          <item id="uid21">A reference to the array is passed as a parameter to the method
+<code display="inline">reverse</code>. The formal parameter <code display="inline">a</code> contains a reference to the same array pointeed to by the actual parameter <code display="inline">fib</code>.
+</item>
+          <item id="uid22">A new array <code display="inline">b</code> of the same type and length as the parameter <code display="inline">a</code> is declared and allocated.
+</item>
+          <item id="uid23">Each iteration of the for-loop moves one element from the first half of <code display="inline">a</code> to the second half of <code display="inline">b</code> and one element from the second half of <code display="inline">a</code> to the first half of <code display="inline">b</code>. Variables <code display="inline">i</code> and <code display="inline">j</code> contain the indices of the two elements that are moved.
+</item>
+          <item id="uid24">The reference to array <code display="inline">b</code> is returned.
+Although array referenced by <code display="inline">b</code> was allocated <emphasis effect="italics">within</emphasis> the method call, it still exists after returning.
+</item>
+          <item id="uid25">The reference that is returned is assigned to <code display="inline">reversedFib</code>.
+</item>
+        </list>
+        <para id="id66790"><emphasis effect="bold">Exercise</emphasis> The program has a bug. Fix it!</para>
+      </section>
+      <section id="uid26">
+        <title>Array assignment can create garbage</title>
+        <para id="id66807"><emphasis effect="bold">Concept</emphasis> Since an array variable contains a reference to the array itself, if
+<code display="inline">null</code> or another value (another array of the same type) is assigned to the
+variable, the first array may no longer be accessible. Inaccessible memory
+is called <emphasis effect="italics">garbage</emphasis>. The Java runtime system includes a <emphasis effect="italics">garbage
+collector</emphasis> whose task is to return garbage to the pool of memory that can
+be allocated.</para>
+        <para id="id66835">
+          <emphasis effect="bold">Program: Array05.java</emphasis>
+        </para>
+        <code id="id66841" display="block">// Learning Object Array05
+//    array assignment can create garbage
+public class Array05 {
+    static int[] first(int[] a) {
+        int[] b = new int[a.length/2];
+        for (int i = 0; i &lt; a.length / 2; i++)
+            b[i] = a[i];
+        return b;
+    }
+ 
+    public static void main(/*String[] args*/) {
+        int[] fib = {0, 1, 1, 2, 3, 5, 8};
+        fib = first(fib);
+    }
+}
+</code>
+        <para id="id66979">An array referenced by the variable <code display="inline">fib</code> is passed as a parameter to a method that moves the values of the elements in the first half of the array <code display="inline">fib</code> into a new array <code display="inline">b</code> which is allocated in the method. The new array is returned to the main method and assigned to the variable <code display="inline">fib</code>, destroying the reference to the original array.</para>
+        <list id="id67006" display="block" list-type="bulleted">
+          <item id="uid27">Initially, the variable <code display="inline">fib</code> of type integer array is allocated. As part of the same statement, the array object is created with its seven fields having the values in the initializer; the reference to the object is returned and stored in the variable <code display="inline">fib</code>.
+</item>
+          <item id="uid28">A reference to the array is passed as a parameter to the method <code display="inline">first</code>. The formal parameter <code display="inline">a</code> contains a reference to the same array pointed to by the actual parameter <code display="inline">fib</code>.
+</item>
+          <item id="uid29">A new array <code display="inline">b</code> of the same type as the parameter <code display="inline">a</code> but half the length is declared and allocated.
+</item>
+          <item id="uid30">Each iteration of the for-loop moves one element from the first half of <code display="inline">a</code> to the corresponding element in the array <code display="inline">b</code>.
+</item>
+          <item id="uid31">The reference to array <code display="inline">b</code> is returned. Although array referenced by <code display="inline">b</code> was allocated <emphasis effect="italics">within</emphasis> the method call, it still exists after returning.
+</item>
+          <item id="uid32">There are no references to the original array so it is
+inaccessible. Jeliot does not visualize garbage collection so the array
+remains visualized in the Instance and Array Area until the end of the
+program.
+</item>
+        </list>
+        <para id="id67155"><emphasis effect="bold">Exercise</emphasis> Modify the program so that the original array remains accessible
+in a different field.</para>
+      </section>
+      <section id="uid33">
+        <title>Two-dimensional arrays</title>
+        <para id="id67173"><emphasis effect="bold">Concept</emphasis> A matrix can be stored in a two-dimensional array. The syntax is
+<code display="inline">int[][]</code> with two indices, the first for rows and the second for
+columns. To access an element of the array, expressions for the two
+indices must be givien.</para>
+        <para id="id67188">
+          <emphasis effect="bold">Program: Array06.java</emphasis>
+        </para>
+        <code id="id67195" display="block">// Learning Object Array06
+//     two-dimensional arrays
+public class Array06 {
+    static int addElements(int[][] a) {
+        int sum = 0;
+        for (int i = 0; i &lt; a.length; i++)
+            for (int j = 0; j &lt; a[i].length; j++)
+                sum = sum + a[i][j];
+        return sum;
+    }
+ 
+    public static void main(/*String[] args*/) {
+        int[][] matrix = new int[2][2];
+        for (int i = 0; i &lt; matrix.length; i++)
+            for (int j = 0; j &lt; matrix[i].length; j++)
+                matrix[i][j] = i*matrix.length + j;
+        int sum = addElements(matrix);
+    }
+}
+</code>
+        <para id="id67381">This program creates a <m:math overflow="scroll"><m:mrow><m:mn>2</m:mn><m:mo>×</m:mo><m:mn>2</m:mn></m:mrow></m:math> matrix and computes
+the sum of its elements.</para>
+        <list id="id67400" display="block" list-type="bulleted">
+          <item id="uid34">A two-dimensional array is allocated, the reference to it is
+assigned to the variable <code display="inline">matrix</code>.
+The variable <code display="inline">matrix</code> contains one reference for each row,
+and the rows are allocated as separate objects.
+Note that Jeliot displays each row from top to bottom as it does for all objects!
+</item>
+          <item id="uid35">The elements of the array are initialized to (0,1,2,3) in a nested for-loop.
+The outside loop iterates over the rows and the inner loop iterates over the
+columns within an array.
+</item>
+          <item id="uid36"><code display="inline">matrix.length</code> is used to get the number of rows and
+<code display="inline">matrix[i].length</code> to get the number of columns in row <code display="inline">i</code>, which
+is the same for all rows in this program.
+</item>
+          <item id="uid37">The reference to the array is passed as a parameter to the method
+<code display="inline">addElements</code>, which adds the values of all the elements.
+</item>
+          <item id="uid38">The sum is returned from the method and assigned to the variable <code display="inline">sum</code>.
+</item>
+        </list>
+        <para id="id67508"><emphasis effect="bold">Exercise</emphasis> Modify the program perform the same computation on a <m:math overflow="scroll"><m:mrow><m:mn>2</m:mn><m:mo>×</m:mo><m:mn>3</m:mn></m:mrow></m:math>
+matrix and on a <m:math overflow="scroll"><m:mrow><m:mn>3</m:mn><m:mo>×</m:mo><m:mn>2</m:mn></m:mrow></m:math> matrix.</para>
+      </section>
+      <section id="uid39">
+        <title>Arrays of arrays</title>
+        <para id="id67555"><emphasis effect="bold">Concept</emphasis> A two-dimensional array is really an array of arrays; that is, each
+element of the array contains a reference to another array. Therefore, by
+using only one index a one-dimensional array is obtained.</para>
+        <para id="id67564">
+          <emphasis effect="bold">Program: Array07.java</emphasis>
+        </para>
+        <code id="id67571" display="block">// Learning Object Array07
+//    arrays of arrays
+public class Array07 {
+    public static void main(/*String[] args*/) {
+        int[][] matrix = new int[2][2];
+        for (int i = 0; i &lt; matrix.length; i++)
+            for (int j = 0; j &lt; matrix[i].length; j++)
+                matrix[i][j] = i*matrix.length + j;
+        int[] vector = matrix[1];
+    }
+}
+</code>
+        <para id="id67677">This program creates a <m:math overflow="scroll"><m:mrow><m:mn>2</m:mn><m:mo>×</m:mo><m:mn>2</m:mn></m:mrow></m:math> matrix and then assigns the second row to a variable of type <emphasis effect="italics">one-dimensional</emphasis> array.</para>
+        <list id="id67702" display="block" list-type="bulleted">
+          <item id="uid40">A two-dimensional array is allocated, the reference to it is assigned to the variable <code display="inline">matrix</code>.
+The variable <code display="inline">matrix</code> contains one reference for each row and the rows are allocated as separate objects. Note that Jeliot displays rows from top to bottom as it does for all objects!
+</item>
+          <item id="uid41">The elements of the array are initialized to (0,1,2,3) in a nested for-loop.
+The outside loop iterates over the rows and the inner loop iterates over the
+columns within an array.
+</item>
+          <item id="uid42"><code display="inline">matrix.length</code> is used to get the number of rows and
+<code display="inline">matrix[i].length</code> to get the number of columns in row <code display="inline">i</code>, which
+is the same for all rows in this program.
+</item>
+          <item id="uid43">A variable <code display="inline">vector</code> of type one-dimensional array is declared and initialized
+with the second row of the matrix, <code display="inline">matrix[1]</code>.
+</item>
+        </list>
+        <para id="id67797"><emphasis effect="bold">Exercise</emphasis> Write a program to rotate the rows of the array <code display="inline">matrix</code>. That is, row 0 becomes row 1 and row 1 becomes row 0. Now do this for an array of size <m:math overflow="scroll"><m:mrow><m:mn>3</m:mn><m:mo>×</m:mo><m:mn>3</m:mn></m:mrow></m:math>: row 0 becomes row 1, row 1 becomes row 2 and row 2 becomes row 0.</para>
+      </section>
+      <section id="uid44">
+        <title>Ragged Arrays</title>
+        <para id="id67837"><emphasis effect="bold">Concept</emphasis> A two-dimensional array is really an array of arrays; that is, each element of the array contains a reference to another array. However, the two-dimensional array need not be a square matrix, and each row can have a different number of elements. By using only one index a one-dimensional array is obtained and these arrays need not all be of the same size.</para>
+        <para id="id67847">
+          <emphasis effect="bold">Program: Array08.java</emphasis>
+        </para>
+        <code id="id67854" display="block">// Learning Object Array08
+//    ragged arrays
+public class Array08 {
+    static int addElements(int[][] a) {
+        int sum = 0;
+        for (int i = 0; i &lt; a.length; i++)
+            for (int j = 0; j &lt; a[i].length; j++)
+                sum = sum + a[i][j];
+        return sum;
+    }
+ 
+    public static void main(/*String[] args*/) {
+        int[][] matrix = new int[3][];
+        int[] row0 = {0, 1, 2};
+        int[] row1 = {3, 4};
+        int[] row2 = {5};
+        matrix[0] = row0;
+        matrix[1] = row1;
+        matrix[2] = row2;
+        int sum = addElements(matrix);
+    }
+}
+</code>
+        <para id="id68058">Here we create the upper-left triangle of a <m:math overflow="scroll"><m:mrow><m:mn>3</m:mn><m:mo>×</m:mo><m:mn>3</m:mn></m:mrow></m:math> matrix: row 0 of length 3, row 1 of length 2 and row 2 of length 1. Then we add the elements of the “ragged” array.</para>
+        <list id="id68079" display="block" list-type="bulleted">
+          <item id="uid45">The variable <code display="inline">matrix</code> is allocated, but since the size of the rows is not given, it is allocated as a one-dimensional array whose elements are references to one-dimensional arrays of integers. The default value for the elements is <code display="inline">null</code>.
+</item>
+          <item id="uid46">Three rows of different size are allocated with initializers and assigned to the elements of the array <code display="inline">matrix</code>.
+</item>
+          <item id="uid47">A reference to <code display="inline">matrix</code> is passed to the method <code display="inline">addElements</code> which adds the elements of the array and returns the value.
+</item>
+          <item id="uid48"><code display="inline">matrix.length</code> is used to get the number of rows and
+<code display="inline">matrix[i].length</code> to get the number of columns in row <code display="inline">i</code>; these
+are different for each row.
+</item>
+        </list>
+        <para id="id68178"><emphasis effect="bold">Exercise</emphasis> Simplify the allocation of the array <code display="inline">matrix</code>. First, show how the variables <code display="inline">row</code> can be eliminated. Then find out how to write an initializer for a two-dimensional array so that the array can be initialized in one declaration. (Note: initializers for two-dimensional arrays are not supported in Jeliot.)</para>
+      </section>
+      <section id="uid49">
+        <title>Arrays of objects</title>
+        <para id="id68209"><emphasis effect="bold">Concept</emphasis> Arrays can contain references to arbitrary objects. There is no difference between these arrays and arrays whose values are of primitive type, except that an individual element can be of any type.</para>
+        <para id="id68219">
+          <emphasis effect="bold">Program: Array09.java</emphasis>
+        </para>
+        <code id="id68226" display="block">// Learning Object Array09
+//    arrays of objects
+class Access {
+    String name;
+    int level;
+    Access(String u, int l) {
+        name = u; level = l;
+    }
+}
+ 
+public class Array09 {
+    static void swap(Access[] a, int i, int j) {
+        Access temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+ 
+    public static void main(/*String[] args*/) {
+        Access[] accesses = new Access[2];
+        accesses[0] = new Access("Bob", 3);
+        accesses[1] = new Access("Alice", 4);
+        swap(accesses, 0, 1);
+    }
+}
+</code>
+        <para id="id68441">Objects of class <code display="inline">Access</code> contain name of a bank customer and the access level permitted for that customer. This program creates two objects, assigns the their references to elements of the <code display="inline">Access</code> and then swaps the elements of the array.</para>
+        <list id="id68458" display="block" list-type="bulleted">
+          <item id="uid50">The array <code display="inline">accessess</code> of type <code display="inline">Access[]</code>
+is allocated and contains null references.
+</item>
+          <item id="uid51">An object of type <code display="inline">Access</code> are allocated and initialized by its constructor; a reference to the object is stored in the first element of the array <code display="inline">accessess</code>.
+</item>
+          <item id="uid52">Similarly, another object is created and stored in the second element.
+</item>
+          <item id="uid53">The array <code display="inline">accessess</code> is passed to the method <code display="inline">swap</code> along with the
+indices 0 and 1.
+</item>
+          <item id="uid54">The two elements of the array are swapped.
+Note that after executing <code display="inline">a[i] = a[j]</code>,
+both elements of the array point to the second object (<code display="inline">Alice,4</code>),
+while a reference to the first object (<code display="inline">Bob,3</code>) is saved in the variable <code display="inline">temp</code>.
+</item>
+        </list>
+        <para id="id68583"><emphasis effect="bold">Exercise</emphasis> Modify the program so that the initialization of the array
+<code display="inline">accessess</code> is done in one statement instead of three.</para>
+        <para id="id68597"><emphasis effect="bold">Exercise</emphasis> Explain what happens if the method <code display="inline">swap</code> is replaced by:</para>
+        <code id="id68611" display="block">static void swap(Access a, Access b) {
+  Access temp = a;
+  a = b;
+  b = temp;
+}
+</code>
+        <para id="id68657">and the call by <code display="inline">swap(accesses[0], accesses[1]);</code></para>
+      </section>
+    </section>
+  </content>
+</document>

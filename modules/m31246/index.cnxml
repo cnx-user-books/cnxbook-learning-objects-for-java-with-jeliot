@@ -1,0 +1,649 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Learning Objects for Control Structures in Java</title>
+  <metadata>
+  <md:content-id>m31246</md:content-id><md:title>Learning Objects for Control Structures in Java</md:title>
+  <md:abstract>These learning objects are for control structures in Java. Control structures change the dynamic flow of a program and include if, loop, and switch statements.</md:abstract>
+  <md:uuid>26e2c4d7-2cac-42ec-9b7e-84ce1b172772</md:uuid>
+</metadata>
+<featured-links>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit below.
+       Changes to the links section in the source will not be saved. -->
+    <link-group type="prerequisite">
+      <link url="http://www.cs.joensuu.fi/jeliot/" strength="3">Jeliot Program Animation System</link>
+    </link-group>
+  <!-- WARNING! The 'featured-links' section is read only. Do not edit above.
+       Changes to the links section in the source will not be saved. -->
+</featured-links>
+<content>
+    <section id="cid1">
+      <title>Learning Objects for Control Statements</title>
+      <para id="id158617"><emphasis effect="bold">Concept</emphasis> Normally, statements in Java are executed sequentially
+in the order written in the source code. <emphasis effect="italics">Control statements</emphasis> are used
+to modify the order of execution of statements. Most control statements are <emphasis effect="italics">conditional</emphasis>;
+that is, the next statement to be executed depends on the result of evaluating
+an expression, usually, an expression that returns a <emphasis effect="italics">boolean</emphasis> value of true or false.</para>
+      <para id="eip-283">These source code of these learning objects can be found in
+<link resource="control.zip">control.zip</link>.
+</para><table id="id158643" summary="">
+        <tgroup cols="4">
+          <tbody>
+            <row>
+              <entry>LO</entry>
+              <entry>Topic</entry>
+              <entry>Java Files (.java)</entry>
+              <entry>Prerequisites</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid1">"If-statements"</link>
+              </entry>
+              <entry>If-statements</entry>
+              <entry>Control01</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid7">"Conditional expressions"</link>
+              </entry>
+              <entry>Conditional expressions</entry>
+              <entry>Control02</entry>
+              <entry>1</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid12">"While loops"</link>
+              </entry>
+              <entry>While loops</entry>
+              <entry>Control03</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid17">"Do-while loops"</link>
+              </entry>
+              <entry>Do-while loops</entry>
+              <entry>Control04</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid24">"Break statements"</link>
+              </entry>
+              <entry>Break statements</entry>
+              <entry>Control05</entry>
+              <entry>3</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid30">"Counting with for statements"</link>
+              </entry>
+              <entry>Counting with for statements</entry>
+              <entry>Control06</entry>
+              <entry/>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid39">"General for statements"</link>
+              </entry>
+              <entry>General for statements</entry>
+              <entry>Control07</entry>
+              <entry>6</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid48">"Continue statements"</link>
+              </entry>
+              <entry>Continue statements</entry>
+              <entry>Control08</entry>
+              <entry>6</entry>
+            </row>
+            <row>
+              <entry>
+                <link target-id="uid55">"Switch statements"</link>
+              </entry>
+              <entry>Switch statements</entry>
+              <entry>Control09</entry>
+              <entry/>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <!--empty paragraphs get left behind.-->
+      <section id="uid1">
+        <title>If-statements</title>
+        <para id="id159012"><emphasis effect="bold">Concept</emphasis> The execution of an if-statement starts with the evaluation of
+its boolean-valued expression. If the result is true, the statement written
+after the closing parenthesis of the expression is executed; if the result is
+false, the statement written after the <code display="inline">else</code> is executed. These statements
+can be single statements or blocks of statements. In particular,
+the statements can themselves be if-statements (<emphasis effect="italics">nested if-statements</emphasis>),
+in which case the inner statement is executed the same way.</para>
+        <para id="id159033">
+          <emphasis effect="bold">Program: Control01.java</emphasis>
+        </para>
+        <code id="id159040" display="block">// Learning Object Control01
+//    if statements
+public class Control01 {
+    public static void main(/*String[] args*/) {
+        int year = 2000;
+        int month = 6;
+        int days;
+        if (month == 2)
+            if (year % 4 == 0)
+                days = 28;
+            else
+                days = 29;
+        else if (month == 4 || month == 6 ||
+                month == 9 || month == 11)
+            days = 30;
+        else
+            days = 31;
+        System.out.println(days);
+    }
+}
+</code>
+        <para id="id159211">The program computes the number of days in a month taking leap years into account.</para>
+        <list id="id159215" display="block" list-type="bulleted">
+          <item id="uid2">The variables are allocated and the first two, <code display="inline">year</code> and <code display="inline">month</code>, are
+given initial values.
+</item>
+          <item id="uid3">The expression <code display="inline">month == 2</code> evaluates to false, so the statement
+following the else is executed. Jeliot will display <code display="inline">Choosing else-branch</code> to
+emphasize this.
+</item>
+          <item id="uid4">The inner statement is itself an if-statement. The expression is evaluated
+and its result is true. Note that once one of the terms of <code display="inline">||</code> (or) becomes
+true, there is no need to evaluate the others.
+</item>
+          <item id="uid5">The assignment statement following the statement is executed.
+Jeliot will display <code display="inline">Choosing then-branch</code>. (The
+terminology <emphasis effect="italics">then-branch</emphasis> orginates from programming
+languages that require the use of the keyword <code display="inline">then</code> between the expression
+and the statement.)
+</item>
+          <item id="uid6">The value of <code display="inline">days</code> is printed.
+</item>
+        </list>
+        <para id="id159328"><emphasis effect="bold">Exercise</emphasis> Complete the program with the correct computation
+for leap years: a year divisible by 100 is not a leap year unless it
+is also divisible by 400.</para>
+      </section>
+      <section id="uid7">
+        <title>Conditional expressions</title>
+        <para id="id159346"><emphasis effect="bold">Concept</emphasis> A conditional expression is a shorthand for an if-statement that
+assigns different values to one variable:</para>
+        <code id="id159355" display="block">if (expression) var = value1; else var = value2;
+</code>
+        <para id="id159364">This can be rewritten more concisely as:</para>
+        <code id="id159367" display="block">var = (expression) ? value1 : value2;
+</code>
+        <para id="id159376">The boolean-valued expression is evaluated:
+If the result is true, <code display="inline">value1</code> is assigned to <code display="inline">var</code>; if not, <code display="inline">value2</code> is assign to <code display="inline">var</code>.</para>
+        <para id="id159400">
+          <emphasis effect="bold">Program: Control02.java</emphasis>
+        </para>
+        <code id="id159406" display="block">// Learning Object Control02
+//    conditional expressions
+public class Control02 {
+    public static void main(/*String[] args*/) {
+        int year = 2001;
+        int month = 2;
+        int days;
+        if (month == 2)
+            days = (year % 4 == 0) ? 28 : 29;
+        else if (month == 4 || month == 6 ||
+                month == 9 || month == 11)
+            days = 30;
+        else
+            days = 31;
+        System.out.println(days);
+    }
+}
+</code>
+        <para id="id159553">The program computes the number of days in a month taking leap years into account.</para>
+        <list id="id159557" display="block" list-type="bulleted">
+          <item id="uid8">The variables are allocated and the first two, <code display="inline">year</code> and <code display="inline">month</code>, are
+given initial values.
+</item>
+          <item id="uid9">The expression <code display="inline">month == 2</code> evaluates to true, so the statement
+following the expression is executed. Jeliot will display <code display="inline">Choosing then-branch</code> to
+emphasize this.
+</item>
+          <item id="uid10">The inner statement is an assignment statement with a conditional expression.
+The expression is evaluated
+and its result is false, so the value after the colon is assigned to the variable.
+Jeliot will display <code display="inline">Choosing else-branch</code>.
+</item>
+          <item id="uid11">The value of <code display="inline">days</code> is printed.
+</item>
+        </list>
+        <para id="id159642"><emphasis effect="bold">Exercise</emphasis> Complete the program with the correct computation
+for leap years: a year divisible by 100 is not a leap year unless it
+is divisible by 400.</para>
+        <para id="id159651"><emphasis effect="bold">Exercise</emphasis> Rewrite the entire if-statement as nested conditional expressions.</para>
+      </section>
+      <section id="uid12">
+        <title>While loops</title>
+        <para id="id159669"><emphasis effect="bold">Concept</emphasis> A loop enables the execution of a statement (including a block
+of statements within braces) an arbitrary number of times.
+This statement is called the <emphasis effect="italics">loop body</emphasis>.
+In a while loop, an expression is evaluated <emphasis effect="italics">before</emphasis> each
+execution of the loop body,
+and loop body is executed if and only if the expression evaluates to true.</para>
+        <para id="id159691">
+          <emphasis effect="bold">Program: Control03.java</emphasis>
+        </para>
+        <code id="id159698" display="block">// Learning Object Control03
+//    while loops
+public class Control03 {
+    static int LIMIT = 100;
+    public static void main(/*String[] args*/) {
+        int factorial = 1;
+        int n = 1;
+        while (factorial &lt; LIMIT) {
+            System.out.println(factorial);
+            n++;
+            factorial = factorial * n;
+        }
+    }
+}
+</code>
+        <para id="id159828">This program prints all factorials less than <code display="inline">LIMIT = 100</code>, namely,
+<m:math overflow="scroll"><m:mrow><m:mn>1</m:mn><m:mo>!</m:mo><m:mo>=</m:mo><m:mn>1</m:mn></m:mrow></m:math>, <m:math overflow="scroll"><m:mrow><m:mn>2</m:mn><m:mo>!</m:mo><m:mo>=</m:mo><m:mn>2</m:mn></m:mrow></m:math>, <m:math overflow="scroll"><m:mrow><m:mn>3</m:mn><m:mo>!</m:mo><m:mo>=</m:mo><m:mn>6</m:mn></m:mrow></m:math>, <m:math overflow="scroll"><m:mrow><m:mn>4</m:mn><m:mo>!</m:mo><m:mo>=</m:mo><m:mn>24</m:mn></m:mrow></m:math>.</para>
+        <list id="id160080" display="block" list-type="bulleted">
+          <item id="uid13">The static constant and the two variables are allocated and initialized.
+</item>
+          <item id="uid14">Then, and each time the keyword <code display="inline">while</code> is reached, the expression
+is evaluated. If it is true, execution proceeds with the loop body, and
+Jeliot displays <code display="inline">Entering the while loop</code> the first time
+and <code display="inline">Continuing the while loop</code> on subsequent occasions.
+</item>
+          <item id="uid15">The statements of the loop body are executed.
+They print the value of the current factorial, increment the counter
+and compute the new factorial; then, control returns to the while-expression.
+</item>
+          <item id="uid16">If and when the expression evaluates to false, execution
+proceeds with the statement following the loop body.
+Jeliot displays <code display="inline">Exiting the while loop</code>.
+</item>
+        </list>
+        <para id="id160158"><emphasis effect="bold">Exercise</emphasis> According to a formula by Euler,</para>
+        <equation id="id160166">
+          <m:math overflow="scroll" mode="display">
+            <m:mrow>
+              <m:mfrac>
+                <m:mn>1</m:mn>
+                <m:msup>
+                  <m:mn>1</m:mn>
+                  <m:mn>2</m:mn>
+                </m:msup>
+              </m:mfrac>
+              <m:mo>+</m:mo>
+              <m:mfrac>
+                <m:mn>1</m:mn>
+                <m:msup>
+                  <m:mn>2</m:mn>
+                  <m:mn>2</m:mn>
+                </m:msup>
+              </m:mfrac>
+              <m:mo>+</m:mo>
+              <m:mfrac>
+                <m:mn>1</m:mn>
+                <m:msup>
+                  <m:mn>3</m:mn>
+                  <m:mn>2</m:mn>
+                </m:msup>
+              </m:mfrac>
+              <m:mo>+</m:mo>
+              <m:mfrac>
+                <m:mn>1</m:mn>
+                <m:msup>
+                  <m:mn>4</m:mn>
+                  <m:mn>2</m:mn>
+                </m:msup>
+              </m:mfrac>
+              <m:mo>+</m:mo>
+              <m:mo>⋯</m:mo>
+              <m:mo>=</m:mo>
+              <m:mfrac>
+                <m:msup>
+                  <m:mi>π</m:mi>
+                  <m:mn>2</m:mn>
+                </m:msup>
+                <m:mn>6</m:mn>
+              </m:mfrac>
+            </m:mrow>
+          </m:math>
+        </equation>
+        <para id="id160248">Write a program to compute the series until the difference between the two terms
+is less than 0.1.</para>
+      </section>
+      <section id="uid17">
+        <title>Do-while loops</title>
+        <para id="id160264"><emphasis effect="bold">Concept</emphasis> A loop enables the execution of a statement (including a block
+of statements within braces) an arbitrary number of times.
+This statement is called the <emphasis effect="italics">loop body</emphasis>.
+In a do-while loop, an expression is evaluated <emphasis effect="italics">after</emphasis> each
+execution of the loop body, and
+the loop body continues to execute if and only if the expression evaluates to true.</para>
+        <para id="id160286">The loop body of a do-while loop will execute at least one time.
+This type of statement is particularly appropriate for processing input,
+because you need to input data at least once before you can test it in an expression.</para>
+        <para id="id160292">
+          <emphasis effect="bold">Program: Control04.java</emphasis>
+        </para>
+        <code id="id160298" display="block">// Learning Object Control04
+//    do-while loops
+public class Control04 {
+    public static void main(/*String[] args*/) {
+        int input;
+        do {
+             input = Input.nextInt();
+        } while (input &lt;= 0);
+        System.out.println(input);
+    }
+}
+</code>
+        <para id="id160403">The program reads interactive input until a positive number is entered.</para>
+        <list id="id160407" display="block" list-type="bulleted">
+          <item id="uid18">The variable <code display="inline">input</code> is allocated but not initialized.
+</item>
+          <item id="uid19">The loop body of the do-while loop is executed.
+Jeliot displays <code display="inline">Entering the do-while loop</code>.
+</item>
+          <item id="uid20">A value is read interactively into the variable <code display="inline">input</code>.
+First, enter a negative integer.
+</item>
+          <item id="uid21">The expression following the <code display="inline">while</code> is evaluated.
+Since it evaluates to true, the loop body is executed again.
+Jeliot displays <code display="inline">Continuing the do-while loop</code>.
+</item>
+          <item id="uid22">Now enter a positive value into the variable <code display="inline">input</code>.
+</item>
+          <item id="uid23">The expression following the <code display="inline">while</code> is evaluated.
+Since it evaluates to false, the execution of the do-while loop is completed.
+Jeliot displays <code display="inline">Exiting the do-while loop</code>.
+</item>
+        </list>
+        <para id="id160532"><emphasis effect="bold">Exercise</emphasis> Rewrite this program with a while loop.
+Compare it to the do-while loop.</para>
+      </section>
+      <section id="uid24">
+        <title>Break statements</title>
+        <para id="id160551"><emphasis effect="bold">Concept</emphasis> The exit from a while loop occurs <emphasis effect="italics">before</emphasis> the loop body and
+the exit from a do-while loop occurs <emphasis effect="italics">after</emphasis> the loop body.
+The <code display="inline">break</code> statement can
+be used to exit from an arbitrary location or locations from within the loop body.</para>
+        <para id="id160578">The <code display="inline">break</code> statement is useful when the expression that leads to exiting the loop cannot
+be evaluated until some statements from the loop body have been executed,
+and yet there remain statements to be executed after the expression is evaluated.</para>
+        <para id="id160589">
+          <emphasis effect="bold">Program: Control05.java</emphasis>
+        </para>
+        <code id="id160595" display="block">// Learning Object Control05
+//    break statements
+public class Control05 {
+    public static void main(/*String[] args*/) {
+        int input;
+        int sum = 0;
+        while (true) {
+            input = Input.nextInt();
+            if (input &lt; 0) break;
+            sum = sum + input;
+        }
+        System.out.println(sum);
+    }
+}
+</code>
+        <para id="id160725">The program sums a sequence of nonnegative integers read from the input and terminates when
+a negative value is read.</para>
+        <list id="id160729" display="block" list-type="bulleted">
+          <item id="uid25">The two variables are allocated and <code display="inline">sum</code> is initialized with the value zero.
+</item>
+          <item id="uid26">The <code display="inline">while</code> statement is executed with <code display="inline">true</code> as the loop expression.
+Of course, <code display="inline">true</code> will never evaluate to false, so the loop will never be exited
+at the <code display="inline">while</code>.
+</item>
+          <item id="uid27">An integer value is read from the input. If it is negative the <code display="inline">break</code> statement
+is executed and Jeliot displays <code display="inline">Exiting the while loop because of the break</code>.
+</item>
+          <item id="uid28">Otherwise, the following assignment statement is executed and
+Jeliot displays <code display="inline">Continuing without branching</code>.
+</item>
+          <item id="uid29">After the assignment statement is executed, the loop starts again.
+</item>
+        </list>
+        <para id="id160842"><emphasis effect="bold">Exercise</emphasis> Write equivalent programs using a while loop
+and a do-while loop.</para>
+      </section>
+      <section id="uid30">
+        <title>Counting with for statements</title>
+        <para id="id160860"><emphasis effect="bold">Concept</emphasis> Although all loop structures can be programmed as <code display="inline">while</code> loops,
+one special case is directly supported: writing a loop that executes a predetermined number
+of times. The <code display="inline">for</code> statement has three parts:</para>
+        <code id="id160881" display="block">for (int i = 0; i &lt; N; i++)
+</code>
+        <para id="id160890">The first part declares a loop control variable and gives it an initial value.
+The second part contains the exit condition: the loop body will be executed
+as long as the expression evaluates to true. The third part describes how
+the value of the control variable is modified after executing the loop body.
+The syntax show is the conventional one for executing a loop <code display="inline">N</code> times.</para>
+        <para id="id160902">
+          <emphasis effect="bold">Program: Control06.java</emphasis>
+        </para>
+        <code id="id160909" display="block">// Learning Object Control06
+//    counting with for statements
+public class Control06 {
+    static final int N = 6;
+    public static void main(/*String[] args*/) {
+        int factorial = 1;
+        for (int i = 0; i &lt; N; i++)
+            factorial = factorial * (i+1);
+        System.out.println(factorial);
+    }
+}
+</code>
+        <para id="id161012">This program computes the first six factorials in a <code display="inline">for</code> loop
+and the last value is printed.</para>
+        <list id="id161021" display="block" list-type="bulleted">
+          <item id="uid31">The constant <code display="inline">N</code> and the variable <code display="inline">factorial</code> are allocated and initialized.
+</item>
+          <item id="uid32">The control variable <code display="inline">i</code> is allocated and initialized.
+</item>
+          <item id="uid33">The expression <code display="inline">i &lt; N</code> is evaluated and evaluates to true.
+Jeliot displays <code display="inline">Entering the for loop</code>.
+</item>
+          <item id="uid34">The loop body is executed.
+</item>
+          <item id="uid35">The control variable is incremented as specified in the third part of the
+<code display="inline">for</code> statement.
+</item>
+          <item id="uid36">The previous three steps are repeated until the expression evaluates to false;
+this causes the loop to be exited. Jeliot displays <code display="inline">Continuing the for loop</code>
+as long as the expression evaluates to true, and <code display="inline">Exiting the for loop</code> when
+it evaluates to false.
+</item>
+          <item id="uid37">The final value of <code display="inline">factorial</code> is printed.
+</item>
+          <item id="uid38"><emphasis effect="bold">Important</emphasis>: when the loop is exited, the control variable is
+deallocated and no longer exists.
+</item>
+        </list>
+        <para id="id161181"><emphasis effect="bold">Exercise</emphasis> Rewrite the program using a <code display="inline">while</code> loop.</para>
+      </section>
+      <section id="uid39">
+        <title>General for statements</title>
+        <para id="id161205"><emphasis effect="bold">Concept</emphasis> Arbitrary expressions can be given for the initial value of the <code display="inline">for</code> statement, the exit condition, and the modification of the control variable.</para>
+        <para id="id161219">
+          <emphasis effect="bold">Program: Control07.java</emphasis>
+        </para>
+        <code id="id161226" display="block">// Learning Object Control07
+//    General for statements
+public class Control07 {
+    static final int N = 100;
+    public static void main(/*String[] args*/) {
+        int sum = 0;
+        for (int i = 0; i &lt; Math.sqrt(N); i = i + 3)
+            sum = sum + i;
+        System.out.println(sum);
+    }
+}
+</code>
+        <para id="id161329">This program computes the sum of multiples of three that are less
+than the square root of <code display="inline">N</code>.</para>
+        <list id="id161338" display="block" list-type="bulleted">
+          <item id="uid40">The constant <code display="inline">N</code> and the variable <code display="inline">sum</code> are allocated and initialized.
+</item>
+          <item id="uid41">The control variable <code display="inline">i</code> is allocated and initialized.
+</item>
+          <item id="uid42">The expression <code display="inline">i &lt; Math.sqrt(N)</code> is evaluated and evaluates to true.
+Jeliot displays <code display="inline">Entering the for loop</code>.
+</item>
+          <item id="uid43">The loop body is executed.
+</item>
+          <item id="uid44">The control variable is incremented by three as specified in the third part of the
+<code display="inline">for</code> statement.
+</item>
+          <item id="uid45">The previous three steps are repeated until the expression evaluates to false;
+this causes the loop to be exited. Jeliot displays <code display="inline">Continuing the for loop</code>
+as long as the expression evaluates to true, and <code display="inline">Exiting the for loop</code> when
+it evaluates to false.
+</item>
+          <item id="uid46">The final value of <code display="inline">sum</code> is printed.
+</item>
+          <item id="uid47"><emphasis effect="bold">Important</emphasis>: when the loop is exited, the control variable is
+deallocated and no longer exists.
+</item>
+        </list>
+        <para id="id161498"><emphasis effect="bold">Exercise</emphasis> Is <code display="inline">for (;;;)</code> legal? If so, what does it mean?</para>
+        <para id="id161512"><emphasis effect="bold">Exercise</emphasis> Modify the program so that the square root is computed only once.</para>
+      </section>
+      <section id="uid48">
+        <title>Continue statements</title>
+        <para id="id161530"><emphasis effect="bold">Concept</emphasis> The <code display="inline">break</code> statement is used to <emphasis effect="italics">exit</emphasis> a loop
+from an arbitrary location in its body; the <code display="inline">continue</code> statement is used
+to <emphasis effect="italics">skip</emphasis> the rest of a loop body and return to evaluate the condition
+for continuing the loop.</para>
+        <para id="id161562">
+          <emphasis effect="bold">Program: Control08.java</emphasis>
+        </para>
+        <code id="id161569" display="block">// Learning Object Control08
+//    continue statements
+public class Control08 {
+    static final int N = 10;
+    public static void main(/*String[] args*/) {
+        int sum = 0;
+        for (int i = 0; i &lt; N; i++) {
+            if (i % 2 == 0) {
+                if (i % 3 == 0)
+                    continue;
+                else
+                    sum = sum + i;
+            }
+            else if (i % 3 == 0)
+                sum = sum + i;
+            else
+                continue;
+        }
+        System.out.println(sum);
+    }
+}
+</code>
+        <para id="id161762">This program sums all the positive integers less than <code display="inline">N</code> that are
+divisible by 2 or 3 but not by both. For <code display="inline">N=10</code>, the result
+is <m:math overflow="scroll"><m:mrow><m:mn>2</m:mn><m:mo>+</m:mo><m:mn>3</m:mn><m:mo>+</m:mo><m:mn>4</m:mn><m:mo>+</m:mo><m:mn>8</m:mn><m:mo>+</m:mo><m:mn>9</m:mn><m:mo>=</m:mo><m:mn>26</m:mn></m:mrow></m:math>.</para>
+        <list id="id161809" display="block" list-type="bulleted">
+          <item id="uid49">The constant <code display="inline">N</code> and the variable <code display="inline">sum</code> are allocated and initialized.
+</item>
+          <item id="uid50">The <code display="inline">for</code> loop is standard and is executed for the values 0 through <m:math overflow="scroll"><m:mrow><m:mi>N</m:mi><m:mo>-</m:mo><m:mn>1</m:mn></m:mrow></m:math>.
+</item>
+          <item id="uid51">If <code display="inline">i</code> is divisible by 2 and also by 3 (for example, 6), the
+<code display="inline">continue</code> statement is executed and the variable <code display="inline">sum</code> is not modified.
+</item>
+          <item id="uid52">If <code display="inline">i</code> is divisible neither by 2 nor by 3 (for example, 5), the
+<code display="inline">continue</code> statement is executed and the variable <code display="inline">sum</code> is not modified.
+</item>
+          <item id="uid53">In all other cases, the value of <code display="inline">i</code> is added to <code display="inline">sum</code>.
+</item>
+          <item id="uid54">The final value of <code display="inline">sum</code> is printed.
+</item>
+        </list>
+        <para id="id161967"><emphasis effect="bold">Exercise</emphasis> Modify the program so that it explicitly checks for
+divisibility by 6, instead of checking for divisibility by 2 and 3 in
+separate statements.</para>
+        <para id="id161976"><emphasis effect="bold">Exercise</emphasis> Modify the program so that <code display="inline">continue</code> is not used.</para>
+      </section>
+      <section id="uid55">
+        <title>Switch statements</title>
+        <para id="id162000"><emphasis effect="bold">Concept</emphasis> A <code display="inline">switch</code> statement is a generalization of an <code display="inline">if</code> statement.
+Instead of selecting between two alternatives depending on the value
+of a boolean-valued expression, an integer-valued expression is used and there can be
+multiple alternatives introduced by the keyword <code display="inline">case</code>.
+Since there are a very large number of
+integer values, an alternative labeled <code display="inline">default</code> is executed when the
+value in the expression is not explicitly listed in one of the alternatives.</para>
+        <para id="id162034"><emphasis effect="bold">Important:</emphasis>
+In an <code display="inline">if</code>-statement, the end of the statement (or block of statements)
+of the first alternative causes a transfer of control
+to the end of the <code display="inline">if</code> statement, skipping over the statement (or block
+of statements) in the second (<code display="inline">else</code>) alternative. This <emphasis effect="italics">does not</emphasis> happen in
+a <code display="inline">switch</code>: control “drops through” from the end of one alternative to the beginning
+of the next alternative.
+A <code display="inline">break</code> statement must be used to transfer control from the end of an alternative
+to the end of the <code display="inline">switch</code> statement.</para>
+        <para id="id162085">
+          <emphasis effect="bold">Program: Control09.java</emphasis>
+        </para>
+        <code id="id162092" display="block">// Learning Object Control09
+//    switch statements
+public class Control09 {
+    public static void main(/*String[] args*/) {
+        int year = 2001;
+        int month = 4;
+        int days;
+        switch (month) {
+            case 2:
+                days = (year % 4 == 0) ? 28 : 29;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                days = 30;
+            default:
+                days = 31;
+        }
+        System.out.println(days);
+    }
+}
+</code>
+        <para id="id162290">This program computes the number of days in a month.</para>
+        <list id="id162294" display="block" list-type="bulleted">
+          <item id="uid56">The variables are allocated and the first two, <code display="inline">year</code> and <code display="inline">month</code>, are
+given initial values.
+</item>
+          <item id="uid57">The switch statement chooses a <code display="inline">case</code> depending on the value of the variable
+<code display="inline">month</code>. Jeliot displays <code display="inline">Entering a switch statement</code>.
+</item>
+          <item id="uid58">The <code display="inline">case</code> associated with <code display="inline">4</code> is selected.
+Jeliot displays <code display="inline">This case is selected</code>.
+The assignment statement assigns 30 to <code display="inline">days</code>.
+</item>
+          <item id="uid59">The assignment statement assigns 31 to <code display="inline">days</code>.
+</item>
+          <item id="uid60">The switch statement terminates and
+Jeliot displays <code display="inline">Exiting a switch statement</code>.
+</item>
+          <item id="uid61">The value of <code display="inline">days</code> is printed.
+</item>
+        </list>
+        <para id="id162441"><emphasis effect="bold">Exercise</emphasis> Explain why the second assignment statement
+is executed; fix the program.</para>
+        <para id="id162449"><emphasis effect="bold">Exercise</emphasis> Explain why the sequence of <code display="inline">case</code>'s for <m:math overflow="scroll"><m:mrow><m:mn>4</m:mn><m:mo>,</m:mo><m:mn>6</m:mn><m:mo>,</m:mo><m:mn>9</m:mn><m:mo>,</m:mo><m:mn>11</m:mn></m:mrow></m:math> works.</para>
+        <para id="id162487"><emphasis effect="bold">Exercise</emphasis> Modify the program so that the <code display="inline">case</code>'s for the 31-day months
+are given explicitly and so that the days are computed correctly in leap years.
+</para>
+      </section>
+    </section>
+  </content>
+</document>
